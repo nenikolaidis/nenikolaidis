@@ -22,9 +22,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
 
@@ -43,4 +43,9 @@ jobs:
             exit 0
           fi
           git commit -m "chore(cards): refresh $(date -u +%Y-%m-%d)"
-          git push
+          # main may have moved while we rendered; rebase onto it and retry
+          for attempt in 1 2 3; do
+            git pull --rebase origin main && git push && exit 0
+            sleep 5
+          done
+          exit 1

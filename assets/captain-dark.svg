@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 412" width="880" height="412" role="img" aria-labelledby="title desc">
 <title id="title">Captain&#x27;s log</title>
-<desc id="desc">mission: Start with the problem, understand the system, build the solution, then improve it. on_watch: IT engineer: keeping systems, networks and people running. Troubleshooting hardware, software and infrastructure. off_watch: Final-year Digital Systems at the University of Piraeus. Building toward data engineering, cloud and automation. home_port: Greece. Named after Alexander&#x27;s admiral, so I like to chart the course before setting sail.</desc>
+<desc id="desc">mission: Start with the problem, understand the system, build the solution, then improve it. on_watch: IT engineer: keeping systems, networks and people running. Troubleshooting hardware, software and infrastructure. off_watch: Side projects, a homelab to break and fix, and cloud certifications in progress. home_port: Greece. Named after an admiral who mapped unknown coastlines; I map unknown systems.</desc>
 <style>
 text { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace; }
 
@@ -34,12 +34,12 @@ text { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation M
 <text x="68.0" y="207.0" font-size="13" font-weight="400" text-anchor="start" >Troubleshooting hardware, software and infrastructure.</text>
 </g>
 <g class="boot" style="animation-delay:1.0s"><text x="42.0" y="246.0" font-size="14" font-weight="400" fill="#6f8599" text-anchor="start" >&gt; </text><text x="60.0" y="246.0" font-size="14" font-weight="700" fill="#ff5d5d" text-anchor="start" >off_watch</text>
-<text x="68.0" y="268.0" font-size="13" font-weight="400" text-anchor="start" >Final-year Digital Systems at the University of Piraeus.</text>
-<text x="68.0" y="289.0" font-size="13" font-weight="400" text-anchor="start" >Building toward data engineering, cloud and automation.</text>
+<text x="68.0" y="268.0" font-size="13" font-weight="400" text-anchor="start" >Side projects, a homelab to break and fix,</text>
+<text x="68.0" y="289.0" font-size="13" font-weight="400" text-anchor="start" >and cloud certifications in progress.</text>
 </g>
 <g class="boot" style="animation-delay:1.4s"><text x="42.0" y="328.0" font-size="14" font-weight="400" fill="#6f8599" text-anchor="start" >&gt; </text><text x="60.0" y="328.0" font-size="14" font-weight="700" fill="#5aa9ff" text-anchor="start" >home_port</text>
-<text x="68.0" y="350.0" font-size="13" font-weight="400" text-anchor="start" >Greece. Named after Alexander&#x27;s admiral,</text>
-<text x="68.0" y="371.0" font-size="13" font-weight="400" text-anchor="start" >so I like to chart the course before setting sail.</text>
+<text x="68.0" y="350.0" font-size="13" font-weight="400" text-anchor="start" >Greece. Named after an admiral who mapped</text>
+<text x="68.0" y="371.0" font-size="13" font-weight="400" text-anchor="start" >unknown coastlines; I map unknown systems.</text>
 </g>
 </g>
 </svg>

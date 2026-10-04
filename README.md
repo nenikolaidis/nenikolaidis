@@ -14,6 +14,12 @@
   <img alt="Captain's log: mission, on watch, off watch and home port" src="./assets/captain-dark.svg" width="100%">
 </picture>
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./assets/engine-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="./assets/engine-light.svg">
+  <img alt="Engine room: Python, Java, C, JavaScript, PHP, HTML, CSS, Bash, PowerShell, PostgreSQL, MySQL, MongoDB, SQLite, Docker, Git, GitHub, GitHub Actions, Azure, Linux, Windows, Active Directory, Excel" src="./assets/engine-dark.svg" width="100%">
+</picture>
+
 <a href="https://github.com/nenikolaidis?tab=repositories">
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="./assets/fleet-dark.svg">
@@ -21,12 +27,6 @@
   <img alt="Fleet: public repositories, newest first" src="./assets/fleet-dark.svg" width="100%">
 </picture>
 </a>
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./assets/engine-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="./assets/engine-light.svg">
-  <img alt="Engine room: Python, Java, C, JavaScript, PHP, HTML, CSS, MySQL, MongoDB, SQLite, Docker, Git, GitHub, GitHub Actions, Azure, Linux" src="./assets/engine-dark.svg" width="100%">
-</picture>
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="./assets/sonar-dark.svg">

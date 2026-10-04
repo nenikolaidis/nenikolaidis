@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 278" width="880" height="278" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 324" width="880" height="324" role="img" aria-labelledby="title desc">
 <title id="title">Fleet: public repositories</title>
-<desc id="desc">Public repositories: devflow.github.io; Python-Programs; Airline-App; Gym-Website</desc>
+<desc id="desc">Public repositories: gs1-inventory-scanner; devflow.github.io (Web app with authentication, database integration, security rules, testing, CI/CD and deployment); Python-Programs; Airline-App; Gym-Website</desc>
 <style>
 text { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace; }
 
@@ -20,28 +20,33 @@ text { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation M
 <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(120,170,210,0.06)"/>
 </pattern>
 </defs>
-<rect x="0.5" y="0.5" width="879" height="277" rx="14" fill="#0a1622" stroke="rgba(120,170,210,0.16)"/>
-<rect x="0.5" y="0.5" width="879" height="277" rx="14" fill="url(#grid)"/>
+<rect x="0.5" y="0.5" width="879" height="323" rx="14" fill="#0a1622" stroke="rgba(120,170,210,0.16)"/>
+<rect x="0.5" y="0.5" width="879" height="323" rx="14" fill="url(#grid)"/>
 <g fill="#d8e3ec">
-<rect x="24.0" y="24.0" width="832.0" height="230.0" rx="8" fill="rgba(120,170,210,0.04)" stroke="rgba(120,170,210,0.16)"/><text x="38.0" y="46.0" font-size="11" font-weight="700" fill="#3fd0c9" text-anchor="start" letter-spacing="1.5">[ FLEET ]</text><text x="118.9" y="46.0" font-size="11" font-weight="400" fill="#6f8599" text-anchor="start" >4 public repos · newest first · auto-discovered</text>
-<circle cx="42" cy="78" r="4" fill="#F1E05A"/>
-<text x="54.0" y="82.0" font-size="14" font-weight="700" text-anchor="start" >devflow.github.io</text>
-<text x="842.0" y="82.0" font-size="11" font-weight="400" fill="#6f8599" text-anchor="end" >JavaScript · today</text>
+<rect x="24.0" y="24.0" width="832.0" height="276.0" rx="8" fill="rgba(120,170,210,0.04)" stroke="rgba(120,170,210,0.16)"/><text x="38.0" y="46.0" font-size="11" font-weight="700" fill="#3fd0c9" text-anchor="start" letter-spacing="1.5">[ FLEET ]</text><text x="118.9" y="46.0" font-size="11" font-weight="400" fill="#6f8599" text-anchor="start" >5 public repos · newest first · auto-discovered</text>
+<circle cx="42" cy="78" r="4" fill="#3776AB"/>
+<text x="54.0" y="82.0" font-size="14" font-weight="700" text-anchor="start" >gs1-inventory-scanner</text>
+<text x="842.0" y="82.0" font-size="11" font-weight="400" fill="#6f8599" text-anchor="end" >Python · today</text>
 <text x="54.0" y="100.0" font-size="12" font-weight="400" fill="#6f8599" text-anchor="start" font-style="italic" opacity="0.6">~ no log entry yet ~</text>
 <line x1="38" y1="108" x2="842" y2="108" stroke="rgba(120,170,210,0.16)" stroke-dasharray="2 4"/>
-<circle cx="42" cy="124" r="4" fill="#3776AB"/>
-<text x="54.0" y="128.0" font-size="14" font-weight="700" text-anchor="start" >Python-Programs</text>
-<text x="842.0" y="128.0" font-size="11" font-weight="400" fill="#6f8599" text-anchor="end" >Python · 11mo ago</text>
-<text x="54.0" y="146.0" font-size="12" font-weight="400" fill="#6f8599" text-anchor="start" font-style="italic" opacity="0.6">~ no log entry yet ~</text>
+<circle cx="42" cy="124" r="4" fill="#F1E05A"/>
+<text x="54.0" y="128.0" font-size="14" font-weight="700" text-anchor="start" >devflow.github.io</text>
+<text x="842.0" y="128.0" font-size="11" font-weight="400" fill="#6f8599" text-anchor="end" >JavaScript · today</text>
+<text x="54.0" y="146.0" font-size="12" font-weight="400" fill="#6f8599" text-anchor="start" >Web app with authentication, database integration, security rules, testing, CI/CD and deployment</text>
 <line x1="38" y1="154" x2="842" y2="154" stroke="rgba(120,170,210,0.16)" stroke-dasharray="2 4"/>
 <circle cx="42" cy="170" r="4" fill="#3776AB"/>
-<text x="54.0" y="174.0" font-size="14" font-weight="700" text-anchor="start" >Airline-App</text>
+<text x="54.0" y="174.0" font-size="14" font-weight="700" text-anchor="start" >Python-Programs</text>
 <text x="842.0" y="174.0" font-size="11" font-weight="400" fill="#6f8599" text-anchor="end" >Python · 11mo ago</text>
 <text x="54.0" y="192.0" font-size="12" font-weight="400" fill="#6f8599" text-anchor="start" font-style="italic" opacity="0.6">~ no log entry yet ~</text>
 <line x1="38" y1="200" x2="842" y2="200" stroke="rgba(120,170,210,0.16)" stroke-dasharray="2 4"/>
-<circle cx="42" cy="216" r="4" fill="#4F5D95"/>
-<text x="54.0" y="220.0" font-size="14" font-weight="700" text-anchor="start" >Gym-Website</text>
-<text x="842.0" y="220.0" font-size="11" font-weight="400" fill="#6f8599" text-anchor="end" >PHP · 11mo ago</text>
+<circle cx="42" cy="216" r="4" fill="#3776AB"/>
+<text x="54.0" y="220.0" font-size="14" font-weight="700" text-anchor="start" >Airline-App</text>
+<text x="842.0" y="220.0" font-size="11" font-weight="400" fill="#6f8599" text-anchor="end" >Python · 11mo ago</text>
 <text x="54.0" y="238.0" font-size="12" font-weight="400" fill="#6f8599" text-anchor="start" font-style="italic" opacity="0.6">~ no log entry yet ~</text>
+<line x1="38" y1="246" x2="842" y2="246" stroke="rgba(120,170,210,0.16)" stroke-dasharray="2 4"/>
+<circle cx="42" cy="262" r="4" fill="#4F5D95"/>
+<text x="54.0" y="266.0" font-size="14" font-weight="700" text-anchor="start" >Gym-Website</text>
+<text x="842.0" y="266.0" font-size="11" font-weight="400" fill="#6f8599" text-anchor="end" >PHP · 11mo ago</text>
+<text x="54.0" y="284.0" font-size="12" font-weight="400" fill="#6f8599" text-anchor="start" font-style="italic" opacity="0.6">~ no log entry yet ~</text>
 </g>
 </svg>

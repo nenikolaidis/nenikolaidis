@@ -40,22 +40,23 @@ HEADING = ["data engineering", "data analysis", "devops · automation", "cloud �
 # (what, where, blinking cursor after where)
 ON_DUTY = [
     ("it engineer", "infrastructure · support", False),
-    ("bsc digital systems", "univ. of piraeus", False),
+    ("always learning", "studying · building new things", False),
     ("building", "uncharted waters", True),
 ]
 
 # (label, palette colour, skillicons ids)
 ENGINE_ROOM = [
-    ("langs · web", "accent", ["py", "java", "c", "js", "php", "html", "css"]),
-    ("data", "amber", ["mysql", "mongodb", "sqlite"]),
-    ("devops · cloud", "blue", ["docker", "git", "github", "githubactions", "azure", "linux"]),
+    ("langs · scripting", "accent", ["py", "java", "c", "js", "php", "html", "css", "bash", "powershell"]),
+    ("data", "amber", ["postgres", "mysql", "mongodb", "sqlite"]),
+    ("devops · cloud · infra", "blue", ["docker", "git", "github", "githubactions", "azure", "linux", "windows"]),
 ]
+ALSO = "active directory · excel"  # tools skillicons has no icon for
 SPOKEN = "greek (native) · english (C2) · french (C2)"
 
 BRIDGE_LOG = [
-    ("HELM", "course set: data engineering · devops"),
-    ("ENGINE", "automating whatever can be automated"),
-    ("SONAR", "mapping how data moves through systems"),
+    ("HELM", "keeping infrastructure running"),
+    ("ENGINE", "automating repetitive work"),
+    ("SONAR", "turning raw data into answers"),
 ]
 
 # (key, palette colour, lines)
@@ -64,10 +65,10 @@ CAPTAIN_LOG = [
                            "build the solution, then improve it."]),
     ("on_watch", "amber", ["IT engineer: keeping systems, networks and people running.",
                            "Troubleshooting hardware, software and infrastructure."]),
-    ("off_watch", "port", ["Final-year Digital Systems at the University of Piraeus.",
-                           "Building toward data engineering, cloud and automation."]),
-    ("home_port", "blue", ["Greece. Named after Alexander's admiral,",
-                           "so I like to chart the course before setting sail."]),
+    ("off_watch", "port", ["Side projects, a homelab to break and fix,",
+                           "and cloud certifications in progress."]),
+    ("home_port", "blue", ["Greece. Named after an admiral who mapped",
+                           "unknown coastlines; I map unknown systems."]),
 ]
 
 W = 880
@@ -486,11 +487,14 @@ def render_engine(theme: str) -> str:
         b.append(f'<svg x="{PAD + 14}" y="{y + 12}" width="{vw * scale:.1f}" height="{vh * scale:.1f}" '
                  f'viewBox="0 0 {vw:g} {vh:g}">{inner}</svg>')
         y += 12 + icon + 34
+    b.append(t(PAD + 14, y, "> ", 13, p["dim"]) + t(PAD + 30, y, "also", 13, p["amber"], 700)
+             + t(PAD + 100, y, ALSO, 13))
+    y += 26
     b.append(t(PAD + 14, y, "> ", 13, p["dim"]) + t(PAD + 30, y, "spoken", 13, p["port"], 700)
              + t(PAD + 100, y, SPOKEN, 13))
     h = y + 22 + PAD
     b.insert(0, panel(PAD, PAD, W - 2 * PAD, h - 2 * PAD, "ENGINE ROOM", p, "tools that keep the ship moving"))
-    desc = "Tool stack: " + "; ".join(f"{label}: {', '.join(ids)}" for label, _, ids in ENGINE_ROOM) + f"; spoken: {SPOKEN}"
+    desc = "Tool stack: " + "; ".join(f"{label}: {', '.join(ids)}" for label, _, ids in ENGINE_ROOM) + f"; also: {ALSO}; spoken: {SPOKEN}"
     return frame(h, "Engine room: tool stack", desc, p, "\n".join(b), ANIMATIONS)
 
 
