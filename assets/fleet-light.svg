@@ -26,6 +26,7 @@ text { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation M
 <rect x="24.0" y="24.0" width="832.0" height="250.0" rx="8" fill="rgba(20,60,100,0.03)" stroke="rgba(20,60,100,0.16)"/><text x="38.0" y="46.0" font-size="11" font-weight="700" fill="#0f8a84" text-anchor="start" letter-spacing="1.5">[ FLEET ]</text><text x="118.9" y="46.0" font-size="11" font-weight="400" fill="#5d7184" text-anchor="start" >latest 4 of 5 public repos · auto-discovered</text>
 <circle cx="42" cy="78" r="4" fill="#F1E05A"/>
 <text x="54.0" y="82.0" font-size="14" font-weight="700" text-anchor="start" >devflow.github.io</text>
+<rect x="209.6" y="70" width="52" height="16" rx="8" fill="none" stroke="#15803d"/><circle class="blip" cx="220.6" cy="78" r="3" fill="#15803d"/><text x="228.6" y="82.0" font-size="10" font-weight="700" fill="#15803d" text-anchor="start" letter-spacing="1">LIVE</text>
 <text x="842.0" y="82.0" font-size="11" font-weight="400" fill="#5d7184" text-anchor="end" >JavaScript · today</text>
 <text x="54.0" y="100.0" font-size="12" font-weight="400" fill="#5d7184" text-anchor="start" >Web app with authentication, database integration, security rules, testing, CI/CD and deployment</text>
 <line x1="38" y1="108" x2="842" y2="108" stroke="rgba(20,60,100,0.16)" stroke-dasharray="2 4"/>

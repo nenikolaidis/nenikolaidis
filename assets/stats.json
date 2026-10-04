@@ -364,26 +364,28 @@
   "2026-10-01": 0,
   "2026-10-02": 0,
   "2026-10-03": 0,
-  "2026-10-04": 21
+  "2026-10-04": 22
  },
  "langs": {
-  "CSS": 64172,
+  "CSS": 65213,
   "Dockerfile": 136,
-  "HTML": 15827,
-  "JavaScript": 370695,
+  "HTML": 17332,
+  "JavaScript": 404976,
   "PHP": 124848,
   "Python": 74730
  },
  "repos": [
   {
    "description": "Web app with authentication, database integration, security rules, testing, CI/CD and deployment",
+   "homepage": "https://devflow-board-11146.web.app/demo/",
    "language": "JavaScript",
    "name": "devflow.github.io",
-   "pushed_at": "2026-10-04T18:52:09Z",
+   "pushed_at": "2026-10-04T19:27:57Z",
    "stars": 0
   },
   {
    "description": null,
+   "homepage": null,
    "language": "Python",
    "name": "gs1-inventory-scanner",
    "pushed_at": "2026-10-04T15:35:54Z",
@@ -391,6 +393,7 @@
   },
   {
    "description": null,
+   "homepage": null,
    "language": "Python",
    "name": "Python-Programs",
    "pushed_at": "2025-10-15T10:36:46Z",
@@ -398,6 +401,7 @@
   },
   {
    "description": null,
+   "homepage": null,
    "language": "Python",
    "name": "Airline-App",
    "pushed_at": "2025-10-15T10:34:40Z",
@@ -405,6 +409,7 @@
   },
   {
    "description": null,
+   "homepage": null,
    "language": "PHP",
    "name": "Gym-Website",
    "pushed_at": "2025-10-15T10:19:59Z",

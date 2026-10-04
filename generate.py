@@ -177,6 +177,7 @@ def fetch_repos() -> tuple[list[dict], dict[str, int]]:
     """Public, non-fork repos (excluding this one) and summed language bytes."""
     repos = [
         {"name": r["name"], "pushed_at": r["pushed_at"], "description": r["description"],
+         "homepage": r["homepage"] if (r["homepage"] or "").startswith("http") else None,
          "language": r["language"], "stars": r["stargazers_count"]}
         for r in gh_api(f"users/{USER}/repos?per_page=100&type=owner&sort=pushed")
         if not r["fork"] and not r["archived"] and r["name"].lower() != USER.lower()
@@ -451,6 +452,11 @@ def render_fleet(theme: str, repos: list[dict], today: dt.date, limit: int = 4) 
         lang = r.get("language") or "—"
         b.append(f'<circle cx="{x0 + 4}" cy="{y - 4}" r="4" fill="{LANG_COLORS.get(lang, p["dim"])}"/>')
         b.append(t(x0 + 16, y, r["name"], 14, None, 700))
+        if r.get("homepage"):  # the repo's "Website" field marks it as live
+            bx = x0 + 16 + len(r["name"]) * 8.45 + 12
+            b.append(f'<rect x="{bx:.1f}" y="{y - 12}" width="52" height="16" rx="8" fill="none" stroke="{p["starboard"]}"/>'
+                     f'<circle class="blip" cx="{bx + 11:.1f}" cy="{y - 4}" r="3" fill="{p["starboard"]}"/>'
+                     + t(bx + 19, y, "LIVE", 10, p["starboard"], 700, extra='letter-spacing="1"'))
         meta = f'{lang} · {ago(r["pushed_at"], today)}'
         if r.get("stars"):
             meta = f'★ {r["stars"]} · ' + meta
@@ -578,6 +584,26 @@ def render_sonar(theme: str, s: dict) -> str:
     return frame(h, "Contribution sonar", desc, p, "\n".join(b), ANIMATIONS)
 
 
+README = Path("README.md")
+LIVE_START, LIVE_END = "<!-- live:start -->", "<!-- live:end -->"
+
+
+def update_readme(repos: list[dict]) -> None:
+    """Rewrite the clickable live-demo line between the README markers."""
+    if not README.exists():
+        return
+    text = README.read_text()
+    if LIVE_START not in text or LIVE_END not in text:
+        return
+    live = sorted((r for r in repos if r.get("homepage")), key=lambda r: r["pushed_at"], reverse=True)
+    links = " · ".join(f'<a href="{escape(r["homepage"])}">{escape(r["name"].removesuffix(".github.io"))}</a>'
+                       for r in live)
+    block = f"<sub>`▶ live` {links}</sub>" if live else ""
+    head, rest = text.split(LIVE_START, 1)
+    _, tail = rest.split(LIVE_END, 1)
+    README.write_text(f"{head}{LIVE_START}\n{block}\n{LIVE_END}{tail}")
+
+
 def main() -> int:
     ASSETS.mkdir(exist_ok=True)
     stats = collect()
@@ -593,6 +619,7 @@ def main() -> int:
         except Exception as e:  # keep yesterday's card rather than fail the run
             print(f"warn: engine room not refreshed ({e})", file=sys.stderr)
         (ASSETS / f"sonar-{theme}.svg").write_text(render_sonar(theme, s))
+    update_readme(stats["repos"])
     print(f"ok: {s['year']} contributions, {len(stats['repos'])} repos, {len(stats['langs'])} languages")
     return 0
 
