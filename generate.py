@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 """Render the profile cards in assets/ from live GitHub data.
 
-Three cards, each in a dark and a light variant:
+Five cards, each in a dark and a light variant:
   bridge-*.svg   identity, radar of public repos, focus, telemetry, languages
   captain-*.svg  the longer "about me", as a ship's log
+  fleet-*.svg    public repos, newest first, straight from the GitHub API
+  engine-*.svg   tool stack as icons (skillicons.dev, inlined at build time)
   sonar-*.svg    52-week contribution trace
 
 Data sources, in order of preference:
@@ -32,15 +34,23 @@ CACHE = ASSETS / "stats.json"
 NAME = "NEARCHOS NIKOLAIDIS"
 ROLE = "IT Engineer · Data Engineering · DevOps"
 MOTTO = "charting better ways to build"
-POSITION = "Greece · UTC+2 · open to remote"
+POSITION = "Greece · UTC+2"
 
 HEADING = ["data engineering", "data analysis", "devops · automation", "cloud · azure"]
-# (what, where); where=None renders an open slot with a blinking cursor
+# (what, where, blinking cursor after where)
 ON_DUTY = [
-    ("it engineer", "infrastructure · support"),
-    ("bsc digital systems", "univ. of piraeus · final yr"),
-    ("building", None),
+    ("it engineer", "infrastructure · support", False),
+    ("bsc digital systems", "univ. of piraeus", False),
+    ("building", "uncharted waters", True),
 ]
+
+# (label, palette colour, skillicons ids)
+ENGINE_ROOM = [
+    ("langs · web", "accent", ["py", "java", "c", "js", "php", "html", "css"]),
+    ("data", "amber", ["mysql", "mongodb", "sqlite"]),
+    ("devops · cloud", "blue", ["docker", "git", "github", "githubactions", "azure", "linux"]),
+]
+SPOKEN = "greek (native) · english (C2) · french (C2)"
 
 BRIDGE_LOG = [
     ("HELM", "course set: data engineering · devops"),
@@ -159,8 +169,9 @@ def fetch_contributions() -> dict[str, int]:
 def fetch_repos() -> tuple[list[dict], dict[str, int]]:
     """Public, non-fork repos (excluding this one) and summed language bytes."""
     repos = [
-        {"name": r["name"], "pushed_at": r["pushed_at"]}
-        for r in gh_api(f"users/{USER}/repos?per_page=100&type=owner")
+        {"name": r["name"], "pushed_at": r["pushed_at"], "description": r["description"],
+         "language": r["language"], "stars": r["stargazers_count"]}
+        for r in gh_api(f"users/{USER}/repos?per_page=100&type=owner&sort=pushed")
         if not r["fork"] and not r["archived"] and r["name"].lower() != USER.lower()
     ]
     langs: dict[str, int] = {}
@@ -334,46 +345,49 @@ def render_bridge(theme: str, stats: dict, s: dict, today: dt.date) -> str:
         b.append(t(cols[1] + 14, yy, k, 12, p["dim"]) + t(cols[1] + pw - 14, yy + 2, str(v), 22, None, 700, "end"))
 
     b.append(panel(cols[2], y, pw, h, "ON DUTY", p))
-    for i, (what, where) in enumerate(ON_DUTY):
+    for i, (what, where, cursor) in enumerate(ON_DUTY):
         yy = y + 46 + i * 31
-        b.append(t(cols[2] + 14, yy, what, 13))
-        if where:
-            b.append(t(cols[2] + 14, yy + 14, "@ " + where, 11, p["dim"]))
-        else:
-            b.append(t(cols[2] + 14, yy + 14, "@ ", 11, p["dim"])
-                     + f'<rect class="cursor" x="{cols[2] + 30:.1f}" y="{yy + 5}" width="7" height="11" fill="{p["amber"]}"/>')
+        b.append(t(cols[2] + 14, yy, what, 13) + t(cols[2] + 14, yy + 14, "@ " + where, 11, p["dim"]))
+        if cursor:
+            cx = cols[2] + 14 + (len(where) + 2) * 6.6 + 3
+            b.append(f'<rect class="cursor" x="{cx:.1f}" y="{yy + 5}" width="7" height="11" fill="{p["amber"]}"/>')
 
-    # languages manifest
-    y2, h2 = y + h + gap, 76
-    b.append(panel(PAD, y2, W - 2 * PAD, h2, "MANIFEST", p, "languages by bytes across public repos"))
+    # languages manifest: segmented bar, then a 3-column grid with per-language bars
+    y2 = y + h + gap
     total = sum(stats["langs"].values()) or 1
     ranked = sorted(stats["langs"].items(), key=lambda kv: -kv[1])
-    top = ranked[:5]
-    rest = sum(v for _, v in ranked[5:])
-    if rest / total >= 0.005:
-        top.append(("Other", rest))
+    top = ranked[:6]
+    grid_rows = (len(top) + 2) // 3
+    h2 = 70 + grid_rows * 30
+    kb = total / 1024
+    b.append(panel(PAD, y2, W - 2 * PAD, h2, "MANIFEST", p,
+                   f"{len(ranked)} languages · {kb:,.0f} KB across public repos"))
     bx, bw = PAD + 14, W - 2 * PAD - 28
-    b.append(f'<rect x="{bx}" y="{y2 + 34}" width="{bw}" height="8" rx="4" fill="{p["track"]}"/>')
-    b.append(f'<clipPath id="bar"><rect x="{bx}" y="{y2 + 34}" width="{bw}" height="8" rx="4"/></clipPath><g clip-path="url(#bar)">')
     cur = bx
-    for lang, size in top:
+    for lang, size in ranked:
         seg = bw * size / total
-        b.append(f'<rect x="{cur:.1f}" y="{y2 + 34}" width="{seg:.1f}" height="8" fill="{LANG_COLORS.get(lang, p["dim"])}"/>')
+        if seg >= 3:
+            b.append(f'<rect x="{cur:.1f}" y="{y2 + 36}" width="{seg - 2:.1f}" height="10" rx="2" '
+                     f'fill="{LANG_COLORS.get(lang, p["dim"])}"/>')
         cur += seg
-    b.append("</g>")
-    lx = bx
-    for lang, size in top:
-        label = f"{lang} {100 * size / total:.0f}%"
-        b.append(f'<circle cx="{lx + 4}" cy="{y2 + 59}" r="4" fill="{LANG_COLORS.get(lang, p["dim"])}"/>')
-        b.append(t(lx + 13, y2 + 63, label, 12))
-        lx += 13 + len(label) * 7.2 + 22
+    cw = bw / 3
+    lead = top[0][1] if top else 1
+    for i, (lang, size) in enumerate(top):
+        cx, cy = bx + (i % 3) * cw, y2 + 74 + (i // 3) * 30
+        color = LANG_COLORS.get(lang, p["dim"])
+        b.append(f'<circle cx="{cx + 4}" cy="{cy - 4}" r="4" fill="{color}"/>')
+        b.append(t(cx + 14, cy, lang, 12))
+        pct = 100 * size / total
+        b.append(t(cx + cw - 24, cy, f"{pct:.1f}%" if pct >= 0.1 else "<0.1%", 12, p["accent"], 700, "end"))
+        b.append(f'<rect x="{cx + 14}" y="{cy + 7}" width="{cw - 38:.1f}" height="3" rx="1.5" fill="{p["track"]}"/>')
+        b.append(f'<rect x="{cx + 14}" y="{cy + 7}" width="{(cw - 38) * size / lead:.1f}" height="3" rx="1.5" fill="{color}"/>')
 
     # footer
     fy = y2 + h2 + 28
     b.append(t(PAD, fy, f"> last_sync {today.isoformat()}", 11, p["dim"]))
     b.append(t(W - PAD, fy, f"github.com/{USER}", 11, p["dim"], anchor="end"))
 
-    desc = (f"{ROLE}. {MOTTO}. Based in Greece, open to remote. "
+    desc = (f"{ROLE}. {MOTTO}. Based in Greece. "
             f"{s['year']} contributions in the last year across {len(stats['repos'])} public repositories.")
     return frame(fy + 20, f"{NAME} profile card", desc, p, "\n".join(b), ANIMATIONS)
 
@@ -394,6 +408,90 @@ def render_captain(theme: str) -> str:
     b.insert(1, f'<line x1="{PAD + 14}" y1="{PAD + 34}" x2="{W - PAD - 14}" y2="{PAD + 34}" stroke="{p["border"]}"/>')
     desc = " ".join(f"{key}: {' '.join(lines)}" for key, _, lines in CAPTAIN_LOG)
     return frame(h, "Captain's log", desc, p, "\n".join(b), ANIMATIONS)
+
+
+def ago(iso: str, today: dt.date) -> str:
+    days = (today - dt.date.fromisoformat(iso[:10])).days
+    if days < 1:
+        return "today"
+    if days < 14:
+        return f"{days}d ago"
+    if days < 60:
+        return f"{days // 7}w ago"
+    if days < 730:
+        return f"{days // 30}mo ago"
+    return f"{days // 365}y ago"
+
+
+def clip(s: str, n: int) -> str:
+    return s if len(s) <= n else s[: n - 1].rstrip() + "…"
+
+
+def render_fleet(theme: str, repos: list[dict], today: dt.date, limit: int = 6) -> str:
+    """Public repos, newest first. Descriptions come from each repo's GitHub 'About'."""
+    p = PALETTES[theme]
+    ships = sorted(repos, key=lambda r: r["pushed_at"], reverse=True)
+    shown = ships[:limit]
+    row = 46
+    h = PAD + 52 + max(len(shown), 1) * row + (20 if len(ships) > limit else 0) + PAD - 6
+    b = [panel(PAD, PAD, W - 2 * PAD, h - 2 * PAD, "FLEET", p,
+               f"{len(ships)} public repos · newest first · auto-discovered")]
+    x0, x1 = PAD + 14, W - PAD - 14
+    for i, r in enumerate(shown):
+        y = PAD + 58 + i * row
+        if i:
+            b.append(f'<line x1="{x0}" y1="{y - 20}" x2="{x1}" y2="{y - 20}" stroke="{p["border"]}" stroke-dasharray="2 4"/>')
+        lang = r.get("language") or "—"
+        b.append(f'<circle cx="{x0 + 4}" cy="{y - 4}" r="4" fill="{LANG_COLORS.get(lang, p["dim"])}"/>')
+        b.append(t(x0 + 16, y, r["name"], 14, None, 700))
+        meta = f'{lang} · {ago(r["pushed_at"], today)}'
+        if r.get("stars"):
+            meta = f'★ {r["stars"]} · ' + meta
+        b.append(t(x1, y, meta, 11, p["dim"], anchor="end"))
+        if r.get("description"):
+            b.append(t(x0 + 16, y + 18, clip(r["description"], 104), 12, p["dim"]))
+        else:
+            b.append(t(x0 + 16, y + 18, "~ no log entry yet ~", 12, p["dim"], extra='font-style="italic" opacity="0.6"'))
+    if not shown:
+        b.append(t(x0, PAD + 58, "~ harbour empty ~", 13, p["dim"]))
+    if len(ships) > limit:
+        b.append(t(x1, h - PAD - 10, f"+ {len(ships) - limit} more at github.com/{USER}", 11, p["dim"], anchor="end"))
+    desc = "Public repositories: " + "; ".join(
+        f'{r["name"]}' + (f' ({r["description"]})' if r.get("description") else "") for r in shown)
+    return frame(h, "Fleet: public repositories", desc, p, "\n".join(b), ANIMATIONS)
+
+
+def fetch_icons(ids: list[str], theme: str) -> tuple[str, float, float]:
+    """One skillicons row, returned as inner SVG markup plus its viewBox size."""
+    url = f"https://skillicons.dev/icons?i={','.join(ids)}&theme={theme}&perline={len(ids)}"
+    svg = _request(url, accept="image/svg+xml").decode()
+    m = re.search(r'<svg[^>]*viewBox="0 0 ([\d.]+) ([\d.]+)"[^>]*>', svg)
+    if not m:
+        raise RuntimeError(f"unexpected skillicons response for {ids}")
+    inner = svg[m.end(): svg.rstrip().rfind("</svg>")]
+    return inner, float(m.group(1)), float(m.group(2))
+
+
+def render_engine(theme: str) -> str:
+    p = PALETTES[theme]
+    icon = 56  # rendered icon height; skillicons draws 256px icons on a 300px pitch
+    b = [t(PAD + 14, PAD + 52, "$ ", 13, p["dim"]) + t(PAD + 30, PAD + 52, "ls /engine-room", 13)]
+    y = PAD + 66
+    b.append(f'<line x1="{PAD + 14}" y1="{y}" x2="{W - PAD - 14}" y2="{y}" stroke="{p["border"]}"/>')
+    y += 26
+    for label, color, ids in ENGINE_ROOM:
+        inner, vw, vh = fetch_icons(ids, theme)
+        b.append(t(PAD + 14, y, "> ", 13, p["dim"]) + t(PAD + 30, y, label, 13, p[color], 700))
+        scale = icon / 256
+        b.append(f'<svg x="{PAD + 14}" y="{y + 12}" width="{vw * scale:.1f}" height="{vh * scale:.1f}" '
+                 f'viewBox="0 0 {vw:g} {vh:g}">{inner}</svg>')
+        y += 12 + icon + 34
+    b.append(t(PAD + 14, y, "> ", 13, p["dim"]) + t(PAD + 30, y, "spoken", 13, p["port"], 700)
+             + t(PAD + 100, y, SPOKEN, 13))
+    h = y + 22 + PAD
+    b.insert(0, panel(PAD, PAD, W - 2 * PAD, h - 2 * PAD, "ENGINE ROOM", p, "tools that keep the ship moving"))
+    desc = "Tool stack: " + "; ".join(f"{label}: {', '.join(ids)}" for label, _, ids in ENGINE_ROOM) + f"; spoken: {SPOKEN}"
+    return frame(h, "Engine room: tool stack", desc, p, "\n".join(b), ANIMATIONS)
 
 
 def render_sonar(theme: str, s: dict) -> str:
@@ -446,6 +544,11 @@ def main() -> int:
     for theme in PALETTES:
         (ASSETS / f"bridge-{theme}.svg").write_text(render_bridge(theme, stats, s, today))
         (ASSETS / f"captain-{theme}.svg").write_text(render_captain(theme))
+        (ASSETS / f"fleet-{theme}.svg").write_text(render_fleet(theme, stats["repos"], today))
+        try:
+            (ASSETS / f"engine-{theme}.svg").write_text(render_engine(theme))
+        except Exception as e:  # keep yesterday's card rather than fail the run
+            print(f"warn: engine room not refreshed ({e})", file=sys.stderr)
         (ASSETS / f"sonar-{theme}.svg").write_text(render_sonar(theme, s))
     print(f"ok: {s['year']} contributions, {len(stats['repos'])} repos, {len(stats['langs'])} languages")
     return 0

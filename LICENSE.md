@@ -1,6 +1,6 @@
-MIT License
+# MIT License
 
-Copyright (c) 2026 Nearchos Nikolaidis
+Copyright © 2026 [Nearchos Nikolaidis](https://github.com/nenikolaidis) · [LinkedIn](https://www.linkedin.com/in/nearchos-nikolaidis-794013289/)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

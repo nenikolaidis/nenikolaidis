@@ -364,7 +364,7 @@
   "2026-10-01": 0,
   "2026-10-02": 0,
   "2026-10-03": 0,
-  "2026-10-04": 13
+  "2026-10-04": 14
  },
  "langs": {
   "CSS": 57780,
@@ -376,20 +376,32 @@
  },
  "repos": [
   {
-   "name": "Airline-App",
-   "pushed_at": "2025-10-15T10:34:40Z"
-  },
-  {
+   "description": null,
+   "language": "JavaScript",
    "name": "devflow.github.io",
-   "pushed_at": "2026-10-04T14:14:57Z"
+   "pushed_at": "2026-10-04T14:14:57Z",
+   "stars": 0
   },
   {
-   "name": "Gym-Website",
-   "pushed_at": "2025-10-15T10:19:59Z"
-  },
-  {
+   "description": null,
+   "language": "Python",
    "name": "Python-Programs",
-   "pushed_at": "2025-10-15T10:36:46Z"
+   "pushed_at": "2025-10-15T10:36:46Z",
+   "stars": 0
+  },
+  {
+   "description": null,
+   "language": "Python",
+   "name": "Airline-App",
+   "pushed_at": "2025-10-15T10:34:40Z",
+   "stars": 0
+  },
+  {
+   "description": null,
+   "language": "PHP",
+   "name": "Gym-Website",
+   "pushed_at": "2025-10-15T10:19:59Z",
+   "stars": 0
   }
  ]
 }
