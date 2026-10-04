@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 412" width="880" height="412" role="img" aria-labelledby="title desc">
 <title id="title">Captain&#x27;s log</title>
-<desc id="desc">mission: Start with the problem, understand the system, build the solution, then improve it. on_watch: IT engineer: keeping systems, networks and people running. Troubleshooting hardware, software and infrastructure. off_watch: Side projects, a homelab to break and fix, and cloud certifications in progress. home_port: Greece. Named after an admiral who mapped unknown coastlines; I map unknown systems.</desc>
+<desc id="desc">mission: Start with the problem, understand the system, build the solution, then improve it. on_watch: IT engineer: keeping systems, networks and people running. Troubleshooting hardware, software and infrastructure. off_watch: Side projects, a homelab to break and fix, and always something new to learn. home_port: Greece. Named after an admiral who mapped unknown coastlines; I map unknown systems.</desc>
 <style>
 text { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace; }
 
@@ -35,7 +35,7 @@ text { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation M
 </g>
 <g class="boot" style="animation-delay:1.0s"><text x="42.0" y="246.0" font-size="14" font-weight="400" fill="#5d7184" text-anchor="start" >&gt; </text><text x="60.0" y="246.0" font-size="14" font-weight="700" fill="#c62828" text-anchor="start" >off_watch</text>
 <text x="68.0" y="268.0" font-size="13" font-weight="400" text-anchor="start" >Side projects, a homelab to break and fix,</text>
-<text x="68.0" y="289.0" font-size="13" font-weight="400" text-anchor="start" >and cloud certifications in progress.</text>
+<text x="68.0" y="289.0" font-size="13" font-weight="400" text-anchor="start" >and always something new to learn.</text>
 </g>
 <g class="boot" style="animation-delay:1.4s"><text x="42.0" y="328.0" font-size="14" font-weight="400" fill="#5d7184" text-anchor="start" >&gt; </text><text x="60.0" y="328.0" font-size="14" font-weight="700" fill="#1565c0" text-anchor="start" >home_port</text>
 <text x="68.0" y="350.0" font-size="13" font-weight="400" text-anchor="start" >Greece. Named after an admiral who mapped</text>

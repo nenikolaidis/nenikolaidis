@@ -44,13 +44,19 @@ ON_DUTY = [
     ("building", "uncharted waters", True),
 ]
 
-# (label, palette colour, skillicons ids)
+# (label, palette colour, icons). Plain ids come from skillicons.dev;
+# "si:<slug>" ids are Simple Icons logos drawn on a matching tile.
 ENGINE_ROOM = [
-    ("langs · scripting", "accent", ["py", "java", "c", "js", "php", "html", "css", "bash", "powershell"]),
-    ("data", "amber", ["postgres", "mysql", "mongodb", "sqlite"]),
-    ("devops · cloud · infra", "blue", ["docker", "git", "github", "githubactions", "azure", "linux", "windows"]),
+    ("languages", "accent", ["py", "java", "c", "js", "php"]),
+    ("scripting · web", "accent", ["bash", "powershell", "html", "css"]),
+    ("data", "amber", ["postgres", "mysql", "mongodb", "sqlite", "si:pandas", "si:numpy"]),
+    ("devops · tools", "blue", ["docker", "git", "github", "githubactions", "vscode"]),
+    ("cloud · systems", "blue", ["azure", "linux", "windows", "si:vmware", "si:virtualbox"]),
+    ("network · familiar", "dim", ["si:cisco", "si:wireshark"]),
 ]
-ALSO = "active directory · excel"  # tools skillicons has no icon for
+ALSO = "active directory · excel"  # no icon for these
+SIMPLE_ICONS = "https://cdn.jsdelivr.net/npm/simple-icons@16.34.0"
+TILE = {"dark": "#242938", "light": "#F4F2ED"}  # skillicons' own tile colours
 SPOKEN = "greek (native) · english (C2) · french (C2)"
 
 BRIDGE_LOG = [
@@ -66,7 +72,7 @@ CAPTAIN_LOG = [
     ("on_watch", "amber", ["IT engineer: keeping systems, networks and people running.",
                            "Troubleshooting hardware, software and infrastructure."]),
     ("off_watch", "port", ["Side projects, a homelab to break and fix,",
-                           "and cloud certifications in progress."]),
+                           "and always something new to learn."]),
     ("home_port", "blue", ["Greece. Named after an admiral who mapped",
                            "unknown coastlines; I map unknown systems."]),
 ]
@@ -428,15 +434,15 @@ def clip(s: str, n: int) -> str:
     return s if len(s) <= n else s[: n - 1].rstrip() + "…"
 
 
-def render_fleet(theme: str, repos: list[dict], today: dt.date, limit: int = 6) -> str:
-    """Public repos, newest first. Descriptions come from each repo's GitHub 'About'."""
+def render_fleet(theme: str, repos: list[dict], today: dt.date, limit: int = 4) -> str:
+    """The most recently pushed public repos. Descriptions come from each repo's GitHub 'About'."""
     p = PALETTES[theme]
     ships = sorted(repos, key=lambda r: r["pushed_at"], reverse=True)
     shown = ships[:limit]
     row = 46
     h = PAD + 52 + max(len(shown), 1) * row + (20 if len(ships) > limit else 0) + PAD - 6
     b = [panel(PAD, PAD, W - 2 * PAD, h - 2 * PAD, "FLEET", p,
-               f"{len(ships)} public repos · newest first · auto-discovered")]
+               f"latest {len(shown)} of {len(ships)} public repos · auto-discovered")]
     x0, x1 = PAD + 14, W - PAD - 14
     for i, r in enumerate(shown):
         y = PAD + 58 + i * row
@@ -462,39 +468,72 @@ def render_fleet(theme: str, repos: list[dict], today: dt.date, limit: int = 6) 
     return frame(h, "Fleet: public repositories", desc, p, "\n".join(b), ANIMATIONS)
 
 
-def fetch_icons(ids: list[str], theme: str) -> tuple[str, float, float]:
-    """One skillicons row, returned as inner SVG markup plus its viewBox size."""
-    url = f"https://skillicons.dev/icons?i={','.join(ids)}&theme={theme}&perline={len(ids)}"
-    svg = _request(url, accept="image/svg+xml").decode()
-    m = re.search(r'<svg[^>]*viewBox="0 0 ([\d.]+) ([\d.]+)"[^>]*>', svg)
-    if not m:
-        raise RuntimeError(f"unexpected skillicons response for {ids}")
-    inner = svg[m.end(): svg.rstrip().rfind("</svg>")]
-    return inner, float(m.group(1)), float(m.group(2))
+_icon_cache: dict[tuple[str, str], str] = {}
+_si_colors: dict[str, str] = {}
+
+
+def _luminance(hex6: str) -> float:
+    r, g, b = (int(hex6[i:i + 2], 16) / 255 for i in (0, 2, 4))
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b
+
+
+def icon_markup(icon: str, theme: str) -> str:
+    """Inner markup of one 256x256 icon tile."""
+    key = (icon, theme)
+    if key in _icon_cache:
+        return _icon_cache[key]
+    if icon.startswith("si:"):
+        slug = icon[3:]
+        if not _si_colors:
+            for entry in json.loads(_request(f"{SIMPLE_ICONS}/data/simple-icons.json", accept="application/json")):
+                _si_colors[entry["slug"]] = entry["hex"]
+        color = _si_colors[slug]
+        # keep very dark or very light brand colours visible on the tile
+        if theme == "dark" and _luminance(color) < 0.25:
+            color = "D8E3EC"
+        if theme == "light" and _luminance(color) > 0.85:
+            color = "13212E"
+        svg = _request(f"{SIMPLE_ICONS}/icons/{slug}.svg", accept="image/svg+xml").decode()
+        path = re.search(r'<path d="([^"]+)"', svg).group(1)
+        inner = (f'<rect width="256" height="256" rx="60" fill="{TILE[theme]}"/>'
+                 f'<g transform="translate(56 56) scale(6)"><path d="{path}" fill="#{color}"/></g>')
+    else:
+        svg = _request(f"https://skillicons.dev/icons?i={icon}&theme={theme}", accept="image/svg+xml").decode()
+        m = re.search(r'<svg[^>]*viewBox="0 0 256 256"[^>]*>', svg)
+        if not m or len(svg) < 400:
+            raise RuntimeError(f"skillicons has no icon '{icon}'")
+        inner = svg[m.end(): svg.rstrip().rfind("</svg>")]
+    _icon_cache[key] = inner
+    return inner
 
 
 def render_engine(theme: str) -> str:
     p = PALETTES[theme]
-    icon = 56  # rendered icon height; skillicons draws 256px icons on a 300px pitch
+    icon, pitch = 48, 58
+    col_w = (W - 2 * PAD - 28 - 24) / 2
     b = [t(PAD + 14, PAD + 52, "$ ", 13, p["dim"]) + t(PAD + 30, PAD + 52, "ls /engine-room", 13)]
-    y = PAD + 66
-    b.append(f'<line x1="{PAD + 14}" y1="{y}" x2="{W - PAD - 14}" y2="{y}" stroke="{p["border"]}"/>')
-    y += 26
-    for label, color, ids in ENGINE_ROOM:
-        inner, vw, vh = fetch_icons(ids, theme)
-        b.append(t(PAD + 14, y, "> ", 13, p["dim"]) + t(PAD + 30, y, label, 13, p[color], 700))
-        scale = icon / 256
-        b.append(f'<svg x="{PAD + 14}" y="{y + 12}" width="{vw * scale:.1f}" height="{vh * scale:.1f}" '
-                 f'viewBox="0 0 {vw:g} {vh:g}">{inner}</svg>')
-        y += 12 + icon + 34
+    top = PAD + 66
+    b.append(f'<line x1="{PAD + 14}" y1="{top}" x2="{W - PAD - 14}" y2="{top}" stroke="{p["border"]}"/>')
+    row_h = 92
+    for i, (label, color, icons) in enumerate(ENGINE_ROOM):
+        x = PAD + 14 + (i % 2) * (col_w + 24)
+        y = top + 28 + (i // 2) * row_h
+        b.append(t(x, y, "> ", 13, p["dim"]) + t(x + 16, y, label, 13, p[color], 700))
+        for j, ic in enumerate(icons):
+            b.append(f'<svg x="{x + j * pitch:.1f}" y="{y + 12}" width="{icon}" height="{icon}" '
+                     f'viewBox="0 0 256 256">{icon_markup(ic, theme)}</svg>')
+    y = top + 28 + ((len(ENGINE_ROOM) + 1) // 2) * row_h
+    b.append(f'<line x1="{PAD + 14}" y1="{y - 22}" x2="{W - PAD - 14}" y2="{y - 22}" stroke="{p["border"]}"/>')
     b.append(t(PAD + 14, y, "> ", 13, p["dim"]) + t(PAD + 30, y, "also", 13, p["amber"], 700)
              + t(PAD + 100, y, ALSO, 13))
-    y += 26
+    y += 24
     b.append(t(PAD + 14, y, "> ", 13, p["dim"]) + t(PAD + 30, y, "spoken", 13, p["port"], 700)
              + t(PAD + 100, y, SPOKEN, 13))
     h = y + 22 + PAD
     b.insert(0, panel(PAD, PAD, W - 2 * PAD, h - 2 * PAD, "ENGINE ROOM", p, "tools that keep the ship moving"))
-    desc = "Tool stack: " + "; ".join(f"{label}: {', '.join(ids)}" for label, _, ids in ENGINE_ROOM) + f"; also: {ALSO}; spoken: {SPOKEN}"
+    desc = "Tool stack: " + "; ".join(
+        f"{label}: {', '.join(ic.removeprefix('si:') for ic in icons)}" for label, _, icons in ENGINE_ROOM
+    ) + f"; also: {ALSO}; spoken: {SPOKEN}"
     return frame(h, "Engine room: tool stack", desc, p, "\n".join(b), ANIMATIONS)
 
 

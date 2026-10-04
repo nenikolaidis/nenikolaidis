@@ -6,8 +6,6 @@
   <img alt="Nearchos Nikolaidis · IT Engineer · Data Engineering · DevOps · Greece" src="./assets/bridge-dark.svg" width="100%">
 </picture>
 
-<sub><a href="https://www.linkedin.com/in/nearchos-nikolaidis-794013289/">`linkedin`</a> &nbsp; <a href="mailto:nearchos.nikolaidis@gmail.com">`email`</a> &nbsp; <a href="https://github.com/nenikolaidis?tab=repositories">`repos`</a></sub>
-
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="./assets/captain-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="./assets/captain-light.svg">
@@ -17,14 +15,14 @@
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="./assets/engine-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="./assets/engine-light.svg">
-  <img alt="Engine room: Python, Java, C, JavaScript, PHP, HTML, CSS, Bash, PowerShell, PostgreSQL, MySQL, MongoDB, SQLite, Docker, Git, GitHub, GitHub Actions, Azure, Linux, Windows, Active Directory, Excel" src="./assets/engine-dark.svg" width="100%">
+  <img alt="Engine room: Python, Java, C, JavaScript, PHP, Bash, PowerShell, HTML, CSS, PostgreSQL, MySQL, MongoDB, SQLite, pandas, NumPy, Docker, Git, GitHub, GitHub Actions, Azure, Linux, Windows, VMware, VirtualBox, VS Code, Cisco, Wireshark, Active Directory, Excel" src="./assets/engine-dark.svg" width="100%">
 </picture>
 
 <a href="https://github.com/nenikolaidis?tab=repositories">
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="./assets/fleet-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="./assets/fleet-light.svg">
-  <img alt="Fleet: public repositories, newest first" src="./assets/fleet-dark.svg" width="100%">
+  <img alt="Fleet: latest public repositories" src="./assets/fleet-dark.svg" width="100%">
 </picture>
 </a>
 
