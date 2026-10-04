@@ -1,0 +1,396 @@
+#!/usr/bin/env python3
+"""Render the profile cards in assets/ from live GitHub data.
+
+Two cards, each in a dark and a light variant:
+  bridge-*.svg   identity, radar of public repos, focus, telemetry, languages
+  logbook-*.svg  52-week contribution trace
+
+Data sources, in order of preference:
+  contributions  GraphQL (needs GH_TOKEN)  ->  public contributions page
+  repos/langs    REST API (token optional)
+If a source fails, the last good snapshot in assets/stats.json is reused.
+"""
+
+from __future__ import annotations
+
+import datetime as dt
+import json
+import math
+import os
+import re
+import sys
+import urllib.request
+import zlib
+from html import escape
+from pathlib import Path
+
+USER = "nenikolaidis"
+ASSETS = Path("assets")
+CACHE = ASSETS / "stats.json"
+
+NAME = "NEARCHOS NIKOLAIDIS"
+ROLE = "IT Engineer · Data Engineering · DevOps"
+MOTTO = "charting better ways to build"
+POSITION = "37.9420° N, 23.6465° E · Piraeus, GR · UTC+2 · open to remote"
+
+HEADING = ["data engineering", "data analysis", "devops · automation", "cloud · azure"]
+ON_DUTY = [
+    ("it support technician", "friktories"),
+    ("bsc digital systems", "univ. of piraeus"),
+    ("building", "gs1-inventory-scanner"),
+]
+
+W = 880
+PAD = 24
+MONO = "ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace"
+
+PALETTES = {
+    "dark": {
+        "bg": "#0a1622",
+        "grid": "rgba(120,170,210,0.06)",
+        "panel": "rgba(120,170,210,0.04)",
+        "border": "rgba(120,170,210,0.16)",
+        "text": "#d8e3ec",
+        "dim": "#6f8599",
+        "accent": "#3fd0c9",
+        "amber": "#ffb547",
+        "port": "#ff5d5d",
+        "starboard": "#4ade80",
+        "track": "rgba(120,170,210,0.10)",
+    },
+    "light": {
+        "bg": "#f3f6f9",
+        "grid": "rgba(20,60,100,0.06)",
+        "panel": "rgba(20,60,100,0.03)",
+        "border": "rgba(20,60,100,0.16)",
+        "text": "#13212e",
+        "dim": "#5d7184",
+        "accent": "#0f8a84",
+        "amber": "#b86e00",
+        "port": "#c62828",
+        "starboard": "#15803d",
+        "track": "rgba(20,60,100,0.10)",
+    },
+}
+
+LANG_COLORS = {
+    "Python": "#3776AB", "JavaScript": "#F1E05A", "TypeScript": "#3178C6",
+    "PHP": "#4F5D95", "Java": "#B07219", "C": "#A8B9CC", "C++": "#F34B7D",
+    "HTML": "#E34C26", "CSS": "#663399", "Shell": "#89E051", "SQL": "#E38C00",
+    "Dockerfile": "#384D54", "HCL": "#844FBA", "Go": "#00ADD8",
+}
+
+
+# --------------------------------------------------------------------------- data
+
+def _request(url: str, data: bytes | None = None, accept: str = "application/vnd.github+json") -> bytes:
+    headers = {"Accept": accept, "User-Agent": f"{USER}-profile-card"}
+    token = os.environ.get("GH_TOKEN")
+    if token and "api.github.com" in url:
+        headers["Authorization"] = f"Bearer {token}"
+    req = urllib.request.Request(url, data=data, headers=headers)
+    with urllib.request.urlopen(req, timeout=20) as resp:
+        return resp.read()
+
+
+def gh_api(path: str):
+    return json.loads(_request(f"https://api.github.com/{path}"))
+
+
+CONTRIB_QUERY = """
+query($login: String!) {
+  user(login: $login) {
+    contributionsCollection {
+      contributionCalendar {
+        weeks { contributionDays { date contributionCount } }
+      }
+    }
+  }
+}
+"""
+
+
+def fetch_contributions() -> dict[str, int]:
+    """Daily contribution counts for the last year, keyed by ISO date."""
+    if os.environ.get("GH_TOKEN"):
+        try:
+            body = json.dumps({"query": CONTRIB_QUERY, "variables": {"login": USER}}).encode()
+            data = json.loads(_request("https://api.github.com/graphql", data=body))
+            weeks = data["data"]["user"]["contributionsCollection"]["contributionCalendar"]["weeks"]
+            return {d["date"]: d["contributionCount"] for w in weeks for d in w["contributionDays"]}
+        except Exception as e:  # fall through to the public page
+            print(f"warn: graphql contributions failed ({e})", file=sys.stderr)
+
+    html = _request(f"https://github.com/users/{USER}/contributions", accept="text/html").decode()
+    dates = dict(re.findall(r'data-date="([\d-]+)" id="([\w-]+)"', html))
+    dates = {cell: date for date, cell in dates.items()}
+    days = {}
+    for cell, label in re.findall(r'for="([\w-]+)"[^>]*>([^<]*)</tool-tip>', html):
+        if cell in dates:
+            m = re.match(r"(\d+) contribution", label)
+            days[dates[cell]] = int(m.group(1)) if m else 0
+    if not days:
+        raise RuntimeError("contributions page had no calendar cells")
+    return days
+
+
+def fetch_repos() -> tuple[list[dict], dict[str, int]]:
+    """Public, non-fork repos (excluding this one) and summed language bytes."""
+    repos = [
+        {"name": r["name"], "pushed_at": r["pushed_at"]}
+        for r in gh_api(f"users/{USER}/repos?per_page=100&type=owner")
+        if not r["fork"] and not r["archived"] and r["name"].lower() != USER.lower()
+    ]
+    langs: dict[str, int] = {}
+    for r in repos:
+        for lang, size in gh_api(f"repos/{USER}/{r['name']}/languages").items():
+            langs[lang] = langs.get(lang, 0) + size
+    return repos, langs
+
+
+def collect() -> dict:
+    cached = json.loads(CACHE.read_text()) if CACHE.exists() else {}
+    stats = dict(cached)
+    try:
+        stats["days"] = fetch_contributions()
+    except Exception as e:
+        print(f"warn: contributions unavailable ({e}); using cache", file=sys.stderr)
+    try:
+        stats["repos"], stats["langs"] = fetch_repos()
+    except Exception as e:
+        print(f"warn: repos unavailable ({e}); using cache", file=sys.stderr)
+    if "days" not in stats or "repos" not in stats:
+        raise SystemExit("error: no live data and no cache to fall back on")
+    return stats
+
+
+def summarize(days: dict[str, int]) -> dict:
+    ordered = sorted(days.items())
+    counts = [c for _, c in ordered]
+    longest = run = 0
+    for c in counts:
+        run = run + 1 if c else 0
+        longest = max(longest, run)
+    current = 0
+    tail = counts[:-1] if counts and counts[-1] == 0 else counts  # today may still be empty
+    for c in reversed(tail):
+        if not c:
+            break
+        current += 1
+    weeks = [sum(counts[i:i + 7]) for i in range(0, len(counts), 7)]
+    week_starts = [ordered[i][0] for i in range(0, len(ordered), 7)]
+    return {
+        "year": sum(counts),
+        "month": sum(counts[-30:]),
+        "longest": longest,
+        "current": current,
+        "weeks": weeks,
+        "week_starts": week_starts,
+    }
+
+
+# ------------------------------------------------------------------------ drawing
+
+def t(x, y, s, size=13, fill=None, weight=400, anchor="start", extra="") -> str:
+    paint = f' fill="{fill}"' if fill else ""
+    return (f'<text x="{x:.1f}" y="{y:.1f}" font-size="{size}" font-weight="{weight}"{paint} '
+            f'text-anchor="{anchor}" {extra}>{escape(s)}</text>')
+
+
+def panel(x, y, w, h, label, p, note="") -> str:
+    tag = f"[ {label} ]"
+    out = (f'<rect x="{x:.1f}" y="{y:.1f}" width="{w:.1f}" height="{h:.1f}" rx="8" '
+           f'fill="{p["panel"]}" stroke="{p["border"]}"/>'
+           + t(x + 14, y + 22, tag, 11, p["accent"], 700, extra='letter-spacing="1.5"'))
+    if note:
+        out += t(x + 14 + len(tag) * (11 * 0.6 + 1.5) + 8, y + 22, note, 11, p["dim"])
+    return out
+
+
+def frame(h: int, title: str, desc: str, p: dict, body: str, style: str = "") -> str:
+    return f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {h}" width="{W}" height="{h}" role="img" aria-labelledby="title desc">
+<title id="title">{escape(title)}</title>
+<desc id="desc">{escape(desc)}</desc>
+<style>
+text {{ font-family: {MONO}; }}
+{style}
+@media (prefers-reduced-motion: reduce) {{ * {{ animation: none !important; }} }}
+</style>
+<defs>
+<pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+<path d="M 40 0 L 0 0 0 40" fill="none" stroke="{p['grid']}"/>
+</pattern>
+</defs>
+<rect x="0.5" y="0.5" width="{W - 1}" height="{h - 1}" rx="14" fill="{p['bg']}" stroke="{p['border']}"/>
+<rect x="0.5" y="0.5" width="{W - 1}" height="{h - 1}" rx="14" fill="url(#grid)"/>
+<g fill="{p['text']}">
+{body}
+</g>
+</svg>
+"""
+
+
+def radar(cx: float, cy: float, r: float, repos: list[dict], p: dict, today: dt.date) -> str:
+    out = [f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="{p["panel"]}" stroke="{p["border"]}"/>']
+    for f in (0.66, 0.33):
+        out.append(f'<circle cx="{cx}" cy="{cy}" r="{r * f:.1f}" fill="none" stroke="{p["border"]}"/>')
+    out.append(f'<path d="M {cx - r} {cy} H {cx + r} M {cx} {cy - r} V {cy + r}" stroke="{p["border"]}"/>')
+
+    # sweep: a fading wedge rotating around the centre
+    a = math.radians(-55)
+    x2, y2 = cx + r * math.cos(a), cy + r * math.sin(a)
+    out.append(
+        f'<g class="sweep"><path d="M {cx} {cy} L {cx + r} {cy} A {r} {r} 0 0 0 {x2:.1f} {y2:.1f} Z" '
+        f'fill="url(#sweepfill)"/><line x1="{cx}" y1="{cy}" x2="{cx + r}" y2="{cy}" '
+        f'stroke="{p["accent"]}" stroke-width="1.5"/></g>')
+
+    # one blip per repo: bearing from its name, range from how recently it was pushed
+    for i, repo in enumerate(repos):
+        pushed = dt.date.fromisoformat(repo["pushed_at"][:10])
+        age = min((today - pushed).days / 365, 1)
+        dist = r * (0.18 + 0.72 * age)
+        bearing = math.radians(zlib.crc32(repo["name"].encode()) % 360)
+        bx, by = cx + dist * math.cos(bearing), cy + dist * math.sin(bearing)
+        out.append(f'<circle class="blip" style="animation-delay:{i * 0.7:.1f}s" cx="{bx:.1f}" '
+                   f'cy="{by:.1f}" r="3" fill="{p["accent"]}"/>')
+    out.append(f'<circle cx="{cx}" cy="{cy}" r="2.5" fill="{p["amber"]}"/>')
+    return "\n".join(out)
+
+
+def render_bridge(theme: str, stats: dict, s: dict, today: dt.date) -> str:
+    p = PALETTES[theme]
+    b = [f'<defs><linearGradient id="sweepfill" x1="1" y1="0" x2="0.4" y2="-0.6">'
+         f'<stop offset="0" stop-color="{p["accent"]}" stop-opacity="0.45"/>'
+         f'<stop offset="1" stop-color="{p["accent"]}" stop-opacity="0"/></linearGradient></defs>']
+
+    # header
+    b.append(radar(100, 104, 66, stats["repos"], p, today))
+    x = 200
+    b.append(t(x, 46, "[ NAV-01 ] bridge console", 11, p["dim"], extra='letter-spacing="1.5"'))
+    b.append(t(x, 82, NAME, 30, p["text"], 700, extra='letter-spacing="3"'))
+    b.append(t(x, 110, ROLE, 15, p["text"]))
+    b.append(t(x, 138, "> ", 15, p["accent"], 700) + t(x + 18, 138, MOTTO, 15, p["accent"]))
+    b.append(f'<rect class="cursor" x="{x + 18 + len(MOTTO) * 9.03 + 4:.1f}" y="126" width="8" height="15" fill="{p["accent"]}"/>')
+    b.append(t(x, 164, "◎ " + POSITION, 12, p["dim"]))
+    b.append(f'<circle cx="{W - PAD - 92}" cy="42" r="4" fill="{p["starboard"]}" class="blip"/>'
+             + t(W - PAD, 46, "UNDERWAY", 11, p["starboard"], 700, "end", 'letter-spacing="1.5"'))
+
+    # three panels
+    y, h, gap = 196, 132, 16
+    pw = (W - 2 * PAD - 2 * gap) / 3
+    cols = [PAD + i * (pw + gap) for i in range(3)]
+
+    b.append(panel(cols[0], y, pw, h, "HEADING", p))
+    for i, item in enumerate(HEADING):
+        b.append(t(cols[0] + 14, y + 50 + i * 22, "▸ ", 13, p["amber"]) + t(cols[0] + 32, y + 50 + i * 22, item, 13))
+
+    b.append(panel(cols[1], y, pw, h, "TELEMETRY", p))
+    rows = [("contrib · 12mo", s["year"]), ("contrib · 30d", s["month"]),
+            ("public repos", len(stats["repos"])), ("longest streak", f'{s["longest"]}d')]
+    for i, (k, v) in enumerate(rows):
+        yy = y + 50 + i * 22
+        b.append(t(cols[1] + 14, yy, k, 13, p["dim"]) + t(cols[1] + pw - 14, yy, str(v), 13, p["accent"], 700, "end"))
+
+    b.append(panel(cols[2], y, pw, h, "ON DUTY", p))
+    for i, (what, where) in enumerate(ON_DUTY):
+        yy = y + 48 + i * 28
+        b.append(t(cols[2] + 14, yy, what, 13) + t(cols[2] + 14, yy + 14, "@ " + where, 11, p["dim"]))
+
+    # languages manifest
+    y2, h2 = y + h + gap, 76
+    b.append(panel(PAD, y2, W - 2 * PAD, h2, "MANIFEST", p, "languages by bytes across public repos"))
+    total = sum(stats["langs"].values()) or 1
+    ranked = sorted(stats["langs"].items(), key=lambda kv: -kv[1])
+    top = ranked[:5]
+    rest = sum(v for _, v in ranked[5:])
+    if rest / total >= 0.005:
+        top.append(("Other", rest))
+    bx, bw = PAD + 14, W - 2 * PAD - 28
+    b.append(f'<rect x="{bx}" y="{y2 + 34}" width="{bw}" height="8" rx="4" fill="{p["track"]}"/>')
+    b.append(f'<clipPath id="bar"><rect x="{bx}" y="{y2 + 34}" width="{bw}" height="8" rx="4"/></clipPath><g clip-path="url(#bar)">')
+    cur = bx
+    for lang, size in top:
+        seg = bw * size / total
+        b.append(f'<rect x="{cur:.1f}" y="{y2 + 34}" width="{seg:.1f}" height="8" fill="{LANG_COLORS.get(lang, p["dim"])}"/>')
+        cur += seg
+    b.append("</g>")
+    lx = bx
+    for lang, size in top:
+        label = f"{lang} {100 * size / total:.0f}%"
+        b.append(f'<circle cx="{lx + 4}" cy="{y2 + 59}" r="4" fill="{LANG_COLORS.get(lang, p["dim"])}"/>')
+        b.append(t(lx + 13, y2 + 63, label, 12))
+        lx += 13 + len(label) * 7.2 + 22
+
+    height = y2 + h2 + PAD
+    style = (".sweep { transform-origin: 100px 104px; animation: spin 6s linear infinite; }\n"
+             "@keyframes spin { to { transform: rotate(360deg); } }\n"
+             ".cursor { animation: blink 1.1s steps(1) infinite; }\n"
+             "@keyframes blink { 50% { opacity: 0; } }\n"
+             ".blip { animation: pulse 4.2s ease-in-out infinite; }\n"
+             "@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }")
+    desc = (f"{ROLE}. {MOTTO}. Based in Piraeus, Greece, open to remote. "
+            f"{s['year']} contributions in the last year across {len(stats['repos'])} public repositories.")
+    return frame(height, f"{NAME} profile card", desc, p, "\n".join(b), style)
+
+
+def render_logbook(theme: str, s: dict, today: dt.date) -> str:
+    p = PALETTES[theme]
+    h = 214
+    b = [panel(PAD, PAD, W - 2 * PAD, h - 2 * PAD, "LOGBOOK", p, "contributions per week · last 52 weeks")]
+
+    # summary on the right of the label row
+    summary = f'{s["year"]} total · best week {max(s["weeks"], default=0)} · current streak {s["current"]}d'
+    b.append(t(W - PAD - 14, PAD + 22, summary, 11, p["accent"], 700, "end"))
+
+    weeks = s["weeks"]
+    cx0, cx1 = PAD + 14, W - PAD - 14
+    cy0, cy1 = PAD + 40, h - PAD - 30
+    top = max(max(weeks, default=0), 1)
+    for f in (0, 0.5, 1):
+        yy = cy1 - (cy1 - cy0) * f
+        b.append(f'<line x1="{cx0}" y1="{yy:.1f}" x2="{cx1}" y2="{yy:.1f}" stroke="{p["border"]}" stroke-dasharray="2 4"/>')
+    n = max(len(weeks) - 1, 1)
+    pts = [(cx0 + (cx1 - cx0) * i / n, cy1 - (cy1 - cy0) * v / top) for i, v in enumerate(weeks)]
+    line = " ".join(f"{x:.1f},{y:.1f}" for x, y in pts)
+    b.append(f'<defs><linearGradient id="depth" x1="0" y1="0" x2="0" y2="1">'
+             f'<stop offset="0" stop-color="{p["accent"]}" stop-opacity="0.35"/>'
+             f'<stop offset="1" stop-color="{p["accent"]}" stop-opacity="0"/></linearGradient></defs>')
+    if pts:
+        b.append(f'<polygon points="{cx0},{cy1} {line} {cx1},{cy1}" fill="url(#depth)"/>')
+        b.append(f'<polyline points="{line}" fill="none" stroke="{p["accent"]}" stroke-width="1.8" stroke-linejoin="round"/>')
+        lx, ly = pts[-1]
+        b.append(f'<circle cx="{lx:.1f}" cy="{ly:.1f}" r="3.5" fill="{p["amber"]}" class="blip"/>')
+
+    # month ticks where a new month starts
+    last = None
+    for i, start in enumerate(s["week_starts"]):
+        month = start[:7]
+        if month != last and last is not None:
+            x = cx0 + (cx1 - cx0) * i / n
+            label = dt.date.fromisoformat(start).strftime("%b").lower()
+            b.append(t(x, cy1 + 16, label, 10, p["dim"], anchor="middle"))
+        last = month
+
+    b.append(t(W - PAD, h - 8, f"last sync {today.isoformat()} · auto-updated daily by github actions", 10, p["dim"], anchor="end"))
+    style = (".blip { animation: pulse 2.4s ease-in-out infinite; }\n"
+             "@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }")
+    desc = (f"{s['year']} contributions in the last 52 weeks; best week {max(weeks, default=0)}; "
+            f"longest streak {s['longest']} days.")
+    return frame(h, "Contribution logbook", desc, p, "\n".join(b), style)
+
+
+def main() -> int:
+    ASSETS.mkdir(exist_ok=True)
+    stats = collect()
+    CACHE.write_text(json.dumps(stats, indent=1, sort_keys=True) + "\n")
+    s = summarize(stats["days"])
+    today = dt.date.today()
+    for theme in PALETTES:
+        (ASSETS / f"bridge-{theme}.svg").write_text(render_bridge(theme, stats, s, today))
+        (ASSETS / f"logbook-{theme}.svg").write_text(render_logbook(theme, s, today))
+    print(f"ok: {s['year']} contributions, {len(stats['repos'])} repos, {len(stats['langs'])} languages")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

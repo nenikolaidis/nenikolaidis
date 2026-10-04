@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 444" width="880" height="444" role="img" aria-labelledby="title desc">
+<title id="title">NEARCHOS NIKOLAIDIS profile card</title>
+<desc id="desc">IT Engineer · Data Engineering · DevOps. charting better ways to build. Based in Piraeus, Greece, open to remote. 78 contributions in the last year across 4 public repositories.</desc>
+<style>
+text { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace; }
+.sweep { transform-origin: 100px 104px; animation: spin 6s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.cursor { animation: blink 1.1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+.blip { animation: pulse 4.2s ease-in-out infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+</style>
+<defs>
+<pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+<path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(20,60,100,0.06)"/>
+</pattern>
+</defs>
+<rect x="0.5" y="0.5" width="879" height="443" rx="14" fill="#f3f6f9" stroke="rgba(20,60,100,0.16)"/>
+<rect x="0.5" y="0.5" width="879" height="443" rx="14" fill="url(#grid)"/>
+<g fill="#13212e">
+<defs><linearGradient id="sweepfill" x1="1" y1="0" x2="0.4" y2="-0.6"><stop offset="0" stop-color="#0f8a84" stop-opacity="0.45"/><stop offset="1" stop-color="#0f8a84" stop-opacity="0"/></linearGradient></defs>
+<circle cx="100" cy="104" r="66" fill="rgba(20,60,100,0.03)" stroke="rgba(20,60,100,0.16)"/>
+<circle cx="100" cy="104" r="43.6" fill="none" stroke="rgba(20,60,100,0.16)"/>
+<circle cx="100" cy="104" r="21.8" fill="none" stroke="rgba(20,60,100,0.16)"/>
+<path d="M 34 104 H 166 M 100 38 V 170" stroke="rgba(20,60,100,0.16)"/>
+<g class="sweep"><path d="M 100 104 L 166 104 A 66 66 0 0 0 137.9 49.9 Z" fill="url(#sweepfill)"/><line x1="100" y1="104" x2="166" y2="104" stroke="#0f8a84" stroke-width="1.5"/></g>
+<circle class="blip" style="animation-delay:0.0s" cx="138.0" cy="147.7" r="3" fill="#0f8a84"/>
+<circle class="blip" style="animation-delay:0.7s" cx="110.4" cy="98.2" r="3" fill="#0f8a84"/>
+<circle class="blip" style="animation-delay:1.4s" cx="154.1" cy="83.2" r="3" fill="#0f8a84"/>
+<circle class="blip" style="animation-delay:2.1s" cx="59.0" cy="145.0" r="3" fill="#0f8a84"/>
+<circle cx="100" cy="104" r="2.5" fill="#b86e00"/>
+<text x="200.0" y="46.0" font-size="11" font-weight="400" fill="#5d7184" text-anchor="start" letter-spacing="1.5">[ NAV-01 ] bridge console</text>
+<text x="200.0" y="82.0" font-size="30" font-weight="700" fill="#13212e" text-anchor="start" letter-spacing="3">NEARCHOS NIKOLAIDIS</text>
+<text x="200.0" y="110.0" font-size="15" font-weight="400" fill="#13212e" text-anchor="start" >IT Engineer · Data Engineering · DevOps</text>
+<text x="200.0" y="138.0" font-size="15" font-weight="700" fill="#0f8a84" text-anchor="start" >&gt; </text><text x="218.0" y="138.0" font-size="15" font-weight="400" fill="#0f8a84" text-anchor="start" >charting better ways to build</text>
+<rect class="cursor" x="483.9" y="126" width="8" height="15" fill="#0f8a84"/>
+<text x="200.0" y="164.0" font-size="12" font-weight="400" fill="#5d7184" text-anchor="start" >◎ 37.9420° N, 23.6465° E · Piraeus, GR · UTC+2 · open to remote</text>
+<circle cx="764" cy="42" r="4" fill="#15803d" class="blip"/><text x="856.0" y="46.0" font-size="11" font-weight="700" fill="#15803d" text-anchor="end" letter-spacing="1.5">UNDERWAY</text>
+<rect x="24.0" y="196.0" width="266.7" height="132.0" rx="8" fill="rgba(20,60,100,0.03)" stroke="rgba(20,60,100,0.16)"/><text x="38.0" y="218.0" font-size="11" font-weight="700" fill="#0f8a84" text-anchor="start" letter-spacing="1.5">[ HEADING ]</text>
+<text x="38.0" y="246.0" font-size="13" font-weight="400" fill="#b86e00" text-anchor="start" >▸ </text><text x="56.0" y="246.0" font-size="13" font-weight="400" text-anchor="start" >data engineering</text>
+<text x="38.0" y="268.0" font-size="13" font-weight="400" fill="#b86e00" text-anchor="start" >▸ </text><text x="56.0" y="268.0" font-size="13" font-weight="400" text-anchor="start" >data analysis</text>
+<text x="38.0" y="290.0" font-size="13" font-weight="400" fill="#b86e00" text-anchor="start" >▸ </text><text x="56.0" y="290.0" font-size="13" font-weight="400" text-anchor="start" >devops · automation</text>
+<text x="38.0" y="312.0" font-size="13" font-weight="400" fill="#b86e00" text-anchor="start" >▸ </text><text x="56.0" y="312.0" font-size="13" font-weight="400" text-anchor="start" >cloud · azure</text>
+<rect x="306.7" y="196.0" width="266.7" height="132.0" rx="8" fill="rgba(20,60,100,0.03)" stroke="rgba(20,60,100,0.16)"/><text x="320.7" y="218.0" font-size="11" font-weight="700" fill="#0f8a84" text-anchor="start" letter-spacing="1.5">[ TELEMETRY ]</text>
+<text x="320.7" y="246.0" font-size="13" font-weight="400" fill="#5d7184" text-anchor="start" >contrib · 12mo</text><text x="559.3" y="246.0" font-size="13" font-weight="700" fill="#0f8a84" text-anchor="end" >78</text>
+<text x="320.7" y="268.0" font-size="13" font-weight="400" fill="#5d7184" text-anchor="start" >contrib · 30d</text><text x="559.3" y="268.0" font-size="13" font-weight="700" fill="#0f8a84" text-anchor="end" >12</text>
+<text x="320.7" y="290.0" font-size="13" font-weight="400" fill="#5d7184" text-anchor="start" >public repos</text><text x="559.3" y="290.0" font-size="13" font-weight="700" fill="#0f8a84" text-anchor="end" >4</text>
+<text x="320.7" y="312.0" font-size="13" font-weight="400" fill="#5d7184" text-anchor="start" >longest streak</text><text x="559.3" y="312.0" font-size="13" font-weight="700" fill="#0f8a84" text-anchor="end" >4d</text>
+<rect x="589.3" y="196.0" width="266.7" height="132.0" rx="8" fill="rgba(20,60,100,0.03)" stroke="rgba(20,60,100,0.16)"/><text x="603.3" y="218.0" font-size="11" font-weight="700" fill="#0f8a84" text-anchor="start" letter-spacing="1.5">[ ON DUTY ]</text>
+<text x="603.3" y="244.0" font-size="13" font-weight="400" text-anchor="start" >it support technician</text><text x="603.3" y="258.0" font-size="11" font-weight="400" fill="#5d7184" text-anchor="start" >@ friktories</text>
+<text x="603.3" y="272.0" font-size="13" font-weight="400" text-anchor="start" >bsc digital systems</text><text x="603.3" y="286.0" font-size="11" font-weight="400" fill="#5d7184" text-anchor="start" >@ univ. of piraeus</text>
+<text x="603.3" y="300.0" font-size="13" font-weight="400" text-anchor="start" >building</text><text x="603.3" y="314.0" font-size="11" font-weight="400" fill="#5d7184" text-anchor="start" >@ gs1-inventory-scanner</text>
+<rect x="24.0" y="344.0" width="832.0" height="76.0" rx="8" fill="rgba(20,60,100,0.03)" stroke="rgba(20,60,100,0.16)"/><text x="38.0" y="366.0" font-size="11" font-weight="700" fill="#0f8a84" text-anchor="start" letter-spacing="1.5">[ MANIFEST ]</text><text x="143.2" y="366.0" font-size="11" font-weight="400" fill="#5d7184" text-anchor="start" >languages by bytes across public repos</text>
+<rect x="38" y="378" width="804" height="8" rx="4" fill="rgba(20,60,100,0.10)"/>
+<clipPath id="bar"><rect x="38" y="378" width="804" height="8" rx="4"/></clipPath><g clip-path="url(#bar)">
+<rect x="38.0" y="378" width="416.4" height="8" fill="#F1E05A"/>
+<rect x="454.4" y="378" width="201.5" height="8" fill="#4F5D95"/>
+<rect x="656.0" y="378" width="93.3" height="8" fill="#663399"/>
+<rect x="749.2" y="378" width="63.1" height="8" fill="#3776AB"/>
+<rect x="812.4" y="378" width="29.4" height="8" fill="#E34C26"/>
+</g>
+<circle cx="42" cy="403" r="4" fill="#F1E05A"/>
+<text x="51.0" y="407.0" font-size="12" font-weight="400" text-anchor="start" >JavaScript 52%</text>
+<circle cx="177.8" cy="403" r="4" fill="#4F5D95"/>
+<text x="186.8" y="407.0" font-size="12" font-weight="400" text-anchor="start" >PHP 25%</text>
+<circle cx="263.20000000000005" cy="403" r="4" fill="#663399"/>
+<text x="272.2" y="407.0" font-size="12" font-weight="400" text-anchor="start" >CSS 12%</text>
+<circle cx="348.6" cy="403" r="4" fill="#3776AB"/>
+<text x="357.6" y="407.0" font-size="12" font-weight="400" text-anchor="start" >Python 8%</text>
+<circle cx="448.40000000000003" cy="403" r="4" fill="#E34C26"/>
+<text x="457.4" y="407.0" font-size="12" font-weight="400" text-anchor="start" >HTML 4%</text>
+</g>
+</svg>
