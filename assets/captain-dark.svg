@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 412" width="880" height="412" role="img" aria-labelledby="title desc">
+<title id="title">Captain&#x27;s log</title>
+<desc id="desc">mission: Start with the problem, understand the system, build the solution, then improve it. on_watch: IT engineer: keeping systems, networks and people running. Troubleshooting hardware, software and infrastructure. off_watch: Final-year Digital Systems at the University of Piraeus. Building toward data engineering, cloud and automation. home_port: Greece. Named after Alexander&#x27;s admiral, so I like to chart the course before setting sail.</desc>
+<style>
+text { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace; }
+
+.sweep { transform-origin: 100px 104px; animation: spin 6s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.cursor { animation: blink 1.1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+.blip { animation: pulse 4.2s ease-in-out infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
+.boot { animation: boot 0.5s ease-out backwards; }
+@keyframes boot { from { opacity: 0; transform: translateX(-6px); } }
+
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+</style>
+<defs>
+<pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+<path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(120,170,210,0.06)"/>
+</pattern>
+</defs>
+<rect x="0.5" y="0.5" width="879" height="411" rx="14" fill="#0a1622" stroke="rgba(120,170,210,0.16)"/>
+<rect x="0.5" y="0.5" width="879" height="411" rx="14" fill="url(#grid)"/>
+<g fill="#d8e3ec">
+<rect x="24.0" y="24.0" width="832.0" height="364.0" rx="8" fill="rgba(120,170,210,0.04)" stroke="rgba(120,170,210,0.16)"/><text x="38.0" y="46.0" font-size="11" font-weight="700" fill="#3fd0c9" text-anchor="start" letter-spacing="1.5">[ CAPTAIN&#x27;S LOG ]</text><text x="183.7" y="46.0" font-size="11" font-weight="400" fill="#6f8599" text-anchor="start" >$ cat captain.log</text>
+<line x1="38" y1="58" x2="842" y2="58" stroke="rgba(120,170,210,0.16)"/>
+<g class="boot" style="animation-delay:0.2s"><text x="42.0" y="82.0" font-size="14" font-weight="400" fill="#6f8599" text-anchor="start" >&gt; </text><text x="60.0" y="82.0" font-size="14" font-weight="700" fill="#3fd0c9" text-anchor="start" >mission</text>
+<text x="68.0" y="104.0" font-size="13" font-weight="400" text-anchor="start" >Start with the problem, understand the system,</text>
+<text x="68.0" y="125.0" font-size="13" font-weight="400" text-anchor="start" >build the solution, then improve it.</text>
+</g>
+<g class="boot" style="animation-delay:0.6s"><text x="42.0" y="164.0" font-size="14" font-weight="400" fill="#6f8599" text-anchor="start" >&gt; </text><text x="60.0" y="164.0" font-size="14" font-weight="700" fill="#ffb547" text-anchor="start" >on_watch</text>
+<text x="68.0" y="186.0" font-size="13" font-weight="400" text-anchor="start" >IT engineer: keeping systems, networks and people running.</text>
+<text x="68.0" y="207.0" font-size="13" font-weight="400" text-anchor="start" >Troubleshooting hardware, software and infrastructure.</text>
+</g>
+<g class="boot" style="animation-delay:1.0s"><text x="42.0" y="246.0" font-size="14" font-weight="400" fill="#6f8599" text-anchor="start" >&gt; </text><text x="60.0" y="246.0" font-size="14" font-weight="700" fill="#ff5d5d" text-anchor="start" >off_watch</text>
+<text x="68.0" y="268.0" font-size="13" font-weight="400" text-anchor="start" >Final-year Digital Systems at the University of Piraeus.</text>
+<text x="68.0" y="289.0" font-size="13" font-weight="400" text-anchor="start" >Building toward data engineering, cloud and automation.</text>
+</g>
+<g class="boot" style="animation-delay:1.4s"><text x="42.0" y="328.0" font-size="14" font-weight="400" fill="#6f8599" text-anchor="start" >&gt; </text><text x="60.0" y="328.0" font-size="14" font-weight="700" fill="#5aa9ff" text-anchor="start" >home_port</text>
+<text x="68.0" y="350.0" font-size="13" font-weight="400" text-anchor="start" >Greece. Named after Alexander&#x27;s admiral,</text>
+<text x="68.0" y="371.0" font-size="13" font-weight="400" text-anchor="start" >so I like to chart the course before setting sail.</text>
+</g>
+</g>
+</svg>

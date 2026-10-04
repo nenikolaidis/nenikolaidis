@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Render the profile cards in assets/ from live GitHub data.
 
-Two cards, each in a dark and a light variant:
+Three cards, each in a dark and a light variant:
   bridge-*.svg   identity, radar of public repos, focus, telemetry, languages
-  logbook-*.svg  52-week contribution trace
+  captain-*.svg  the longer "about me", as a ship's log
+  sonar-*.svg    52-week contribution trace
 
 Data sources, in order of preference:
   contributions  GraphQL (needs GH_TOKEN)  ->  public contributions page
@@ -31,13 +32,32 @@ CACHE = ASSETS / "stats.json"
 NAME = "NEARCHOS NIKOLAIDIS"
 ROLE = "IT Engineer · Data Engineering · DevOps"
 MOTTO = "charting better ways to build"
-POSITION = "37.9420° N, 23.6465° E · Piraeus, GR · UTC+2 · open to remote"
+POSITION = "Greece · UTC+2 · open to remote"
 
 HEADING = ["data engineering", "data analysis", "devops · automation", "cloud · azure"]
+# (what, where); where=None renders an open slot with a blinking cursor
 ON_DUTY = [
-    ("it support technician", "friktories"),
-    ("bsc digital systems", "univ. of piraeus"),
-    ("building", "gs1-inventory-scanner"),
+    ("it engineer", "infrastructure · support"),
+    ("bsc digital systems", "univ. of piraeus · final yr"),
+    ("building", None),
+]
+
+BRIDGE_LOG = [
+    ("HELM", "course set: data engineering · devops"),
+    ("ENGINE", "automating whatever can be automated"),
+    ("SONAR", "mapping how data moves through systems"),
+]
+
+# (key, palette colour, lines)
+CAPTAIN_LOG = [
+    ("mission", "accent", ["Start with the problem, understand the system,",
+                           "build the solution, then improve it."]),
+    ("on_watch", "amber", ["IT engineer: keeping systems, networks and people running.",
+                           "Troubleshooting hardware, software and infrastructure."]),
+    ("off_watch", "port", ["Final-year Digital Systems at the University of Piraeus.",
+                           "Building toward data engineering, cloud and automation."]),
+    ("home_port", "blue", ["Greece. Named after Alexander's admiral,",
+                           "so I like to chart the course before setting sail."]),
 ]
 
 W = 880
@@ -56,6 +76,7 @@ PALETTES = {
         "amber": "#ffb547",
         "port": "#ff5d5d",
         "starboard": "#4ade80",
+        "blue": "#5aa9ff",
         "track": "rgba(120,170,210,0.10)",
     },
     "light": {
@@ -69,6 +90,7 @@ PALETTES = {
         "amber": "#b86e00",
         "port": "#c62828",
         "starboard": "#15803d",
+        "blue": "#1565c0",
         "track": "rgba(20,60,100,0.10)",
     },
 }
@@ -257,6 +279,18 @@ def radar(cx: float, cy: float, r: float, repos: list[dict], p: dict, today: dt.
     return "\n".join(out)
 
 
+ANIMATIONS = """
+.sweep { transform-origin: 100px 104px; animation: spin 6s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.cursor { animation: blink 1.1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+.blip { animation: pulse 4.2s ease-in-out infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
+.boot { animation: boot 0.5s ease-out backwards; }
+@keyframes boot { from { opacity: 0; transform: translateX(-6px); } }
+"""
+
+
 def render_bridge(theme: str, stats: dict, s: dict, today: dt.date) -> str:
     p = PALETTES[theme]
     b = [f'<defs><linearGradient id="sweepfill" x1="1" y1="0" x2="0.4" y2="-0.6">'
@@ -267,16 +301,25 @@ def render_bridge(theme: str, stats: dict, s: dict, today: dt.date) -> str:
     b.append(radar(100, 104, 66, stats["repos"], p, today))
     x = 200
     b.append(t(x, 46, "[ NAV-01 ] bridge console", 11, p["dim"], extra='letter-spacing="1.5"'))
-    b.append(t(x, 82, NAME, 30, p["text"], 700, extra='letter-spacing="3"'))
-    b.append(t(x, 110, ROLE, 15, p["text"]))
+    b.append(t(x, 82, NAME, 30, None, 700, extra='letter-spacing="3"'))
+    b.append(t(x, 110, ROLE, 15))
     b.append(t(x, 138, "> ", 15, p["accent"], 700) + t(x + 18, 138, MOTTO, 15, p["accent"]))
     b.append(f'<rect class="cursor" x="{x + 18 + len(MOTTO) * 9.03 + 4:.1f}" y="126" width="8" height="15" fill="{p["accent"]}"/>')
     b.append(t(x, 164, "◎ " + POSITION, 12, p["dim"]))
     b.append(f'<circle cx="{W - PAD - 92}" cy="42" r="4" fill="{p["starboard"]}" class="blip"/>'
              + t(W - PAD, 46, "UNDERWAY", 11, p["starboard"], 700, "end", 'letter-spacing="1.5"'))
 
+    # boot sequence
+    b.append(f'<line x1="{PAD}" y1="188" x2="{W - PAD}" y2="188" stroke="{p["border"]}"/>')
+    for i, (unit, msg) in enumerate(BRIDGE_LOG):
+        yy = 214 + i * 22
+        b.append(f'<g class="boot" style="animation-delay:{0.3 + i * 0.6:.1f}s">'
+                 + t(PAD, yy, f"[{unit}]", 13, p["dim"]) + t(PAD + 84, yy, msg, 13)
+                 + t(W - PAD, yy, "[ OK ]", 13, p["starboard"], 700, "end", 'xml:space="preserve"')
+                 + "</g>")
+
     # three panels
-    y, h, gap = 196, 132, 16
+    y, h, gap = 282, 132, 16
     pw = (W - 2 * PAD - 2 * gap) / 3
     cols = [PAD + i * (pw + gap) for i in range(3)]
 
@@ -285,16 +328,20 @@ def render_bridge(theme: str, stats: dict, s: dict, today: dt.date) -> str:
         b.append(t(cols[0] + 14, y + 50 + i * 22, "▸ ", 13, p["amber"]) + t(cols[0] + 32, y + 50 + i * 22, item, 13))
 
     b.append(panel(cols[1], y, pw, h, "TELEMETRY", p))
-    rows = [("contrib · 12mo", s["year"]), ("contrib · 30d", s["month"]),
-            ("public repos", len(stats["repos"])), ("longest streak", f'{s["longest"]}d')]
+    rows = [("contrib · 12mo", s["year"]), ("contrib · 30d", s["month"]), ("public repos", len(stats["repos"]))]
     for i, (k, v) in enumerate(rows):
-        yy = y + 50 + i * 22
-        b.append(t(cols[1] + 14, yy, k, 13, p["dim"]) + t(cols[1] + pw - 14, yy, str(v), 13, p["accent"], 700, "end"))
+        yy = y + 54 + i * 30
+        b.append(t(cols[1] + 14, yy, k, 12, p["dim"]) + t(cols[1] + pw - 14, yy + 2, str(v), 22, None, 700, "end"))
 
     b.append(panel(cols[2], y, pw, h, "ON DUTY", p))
     for i, (what, where) in enumerate(ON_DUTY):
-        yy = y + 48 + i * 28
-        b.append(t(cols[2] + 14, yy, what, 13) + t(cols[2] + 14, yy + 14, "@ " + where, 11, p["dim"]))
+        yy = y + 46 + i * 31
+        b.append(t(cols[2] + 14, yy, what, 13))
+        if where:
+            b.append(t(cols[2] + 14, yy + 14, "@ " + where, 11, p["dim"]))
+        else:
+            b.append(t(cols[2] + 14, yy + 14, "@ ", 11, p["dim"])
+                     + f'<rect class="cursor" x="{cols[2] + 30:.1f}" y="{yy + 5}" width="7" height="11" fill="{p["amber"]}"/>')
 
     # languages manifest
     y2, h2 = y + h + gap, 76
@@ -321,30 +368,44 @@ def render_bridge(theme: str, stats: dict, s: dict, today: dt.date) -> str:
         b.append(t(lx + 13, y2 + 63, label, 12))
         lx += 13 + len(label) * 7.2 + 22
 
-    height = y2 + h2 + PAD
-    style = (".sweep { transform-origin: 100px 104px; animation: spin 6s linear infinite; }\n"
-             "@keyframes spin { to { transform: rotate(360deg); } }\n"
-             ".cursor { animation: blink 1.1s steps(1) infinite; }\n"
-             "@keyframes blink { 50% { opacity: 0; } }\n"
-             ".blip { animation: pulse 4.2s ease-in-out infinite; }\n"
-             "@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }")
-    desc = (f"{ROLE}. {MOTTO}. Based in Piraeus, Greece, open to remote. "
+    # footer
+    fy = y2 + h2 + 28
+    b.append(t(PAD, fy, f"> last_sync {today.isoformat()}", 11, p["dim"]))
+    b.append(t(W - PAD, fy, f"github.com/{USER}", 11, p["dim"], anchor="end"))
+
+    desc = (f"{ROLE}. {MOTTO}. Based in Greece, open to remote. "
             f"{s['year']} contributions in the last year across {len(stats['repos'])} public repositories.")
-    return frame(height, f"{NAME} profile card", desc, p, "\n".join(b), style)
+    return frame(fy + 20, f"{NAME} profile card", desc, p, "\n".join(b), ANIMATIONS)
 
 
-def render_logbook(theme: str, s: dict, today: dt.date) -> str:
+def render_captain(theme: str) -> str:
     p = PALETTES[theme]
-    h = 214
-    b = [panel(PAD, PAD, W - 2 * PAD, h - 2 * PAD, "LOGBOOK", p, "contributions per week · last 52 weeks")]
+    b = []
+    y = PAD + 58
+    for i, (key, color, lines) in enumerate(CAPTAIN_LOG):
+        delay = f'style="animation-delay:{0.2 + i * 0.4:.1f}s"'
+        b.append(f'<g class="boot" {delay}>' + t(PAD + 18, y, "> ", 14, p["dim"]) + t(PAD + 36, y, key, 14, p[color], 700))
+        for j, line in enumerate(lines):
+            b.append(t(PAD + 44, y + 22 + j * 21, line, 13))
+        b.append("</g>")
+        y += 22 + len(lines) * 21 + 18
+    h = y + PAD - 22
+    b.insert(0, panel(PAD, PAD, W - 2 * PAD, h - 2 * PAD, "CAPTAIN'S LOG", p, "$ cat captain.log"))
+    b.insert(1, f'<line x1="{PAD + 14}" y1="{PAD + 34}" x2="{W - PAD - 14}" y2="{PAD + 34}" stroke="{p["border"]}"/>')
+    desc = " ".join(f"{key}: {' '.join(lines)}" for key, _, lines in CAPTAIN_LOG)
+    return frame(h, "Captain's log", desc, p, "\n".join(b), ANIMATIONS)
 
-    # summary on the right of the label row
-    summary = f'{s["year"]} total · best week {max(s["weeks"], default=0)} · current streak {s["current"]}d'
+
+def render_sonar(theme: str, s: dict) -> str:
+    p = PALETTES[theme]
+    h = 196
+    b = [panel(PAD, PAD, W - 2 * PAD, h - 2 * PAD, "SONAR", p, "contributions per week · last 52 weeks")]
+    summary = f'{s["year"]} total · best week {max(s["weeks"], default=0)} · streak {s["current"]}d · longest {s["longest"]}d'
     b.append(t(W - PAD - 14, PAD + 22, summary, 11, p["accent"], 700, "end"))
 
     weeks = s["weeks"]
     cx0, cx1 = PAD + 14, W - PAD - 14
-    cy0, cy1 = PAD + 40, h - PAD - 30
+    cy0, cy1 = PAD + 40, h - PAD - 26
     top = max(max(weeks, default=0), 1)
     for f in (0, 0.5, 1):
         yy = cy1 - (cy1 - cy0) * f
@@ -371,12 +432,9 @@ def render_logbook(theme: str, s: dict, today: dt.date) -> str:
             b.append(t(x, cy1 + 16, label, 10, p["dim"], anchor="middle"))
         last = month
 
-    b.append(t(W - PAD, h - 8, f"last sync {today.isoformat()} · auto-updated daily by github actions", 10, p["dim"], anchor="end"))
-    style = (".blip { animation: pulse 2.4s ease-in-out infinite; }\n"
-             "@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }")
     desc = (f"{s['year']} contributions in the last 52 weeks; best week {max(weeks, default=0)}; "
             f"longest streak {s['longest']} days.")
-    return frame(h, "Contribution logbook", desc, p, "\n".join(b), style)
+    return frame(h, "Contribution sonar", desc, p, "\n".join(b), ANIMATIONS)
 
 
 def main() -> int:
@@ -387,7 +445,8 @@ def main() -> int:
     today = dt.date.today()
     for theme in PALETTES:
         (ASSETS / f"bridge-{theme}.svg").write_text(render_bridge(theme, stats, s, today))
-        (ASSETS / f"logbook-{theme}.svg").write_text(render_logbook(theme, s, today))
+        (ASSETS / f"captain-{theme}.svg").write_text(render_captain(theme))
+        (ASSETS / f"sonar-{theme}.svg").write_text(render_sonar(theme, s))
     print(f"ok: {s['year']} contributions, {len(stats['repos'])} repos, {len(stats['langs'])} languages")
     return 0
 

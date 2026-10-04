@@ -3,22 +3,28 @@
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="./assets/bridge-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="./assets/bridge-light.svg">
-  <img alt="Nearchos Nikolaidis · IT Engineer · Data Engineering · DevOps · Piraeus, Greece · open to remote" src="./assets/bridge-dark.svg" width="100%">
+  <img alt="Nearchos Nikolaidis · IT Engineer · Data Engineering · DevOps · Greece · open to remote" src="./assets/bridge-dark.svg" width="100%">
 </picture>
 
-<sub><a href="https://www.linkedin.com/in/nearchos-nikolaidis-794013289/">`linkedin`</a> &nbsp; <a href="mailto:nearchos.nikolaidis@gmail.com">`email`</a> &nbsp; <a href="http://devflow.nenikolaidis.gr/">`devflow live`</a> &nbsp; <a href="https://github.com/nenikolaidis?tab=repositories">`repos`</a></sub>
+<sub><a href="https://www.linkedin.com/in/nearchos-nikolaidis-794013289/">`linkedin`</a> &nbsp; <a href="mailto:nearchos.nikolaidis@gmail.com">`email`</a> &nbsp; <a href="https://github.com/nenikolaidis?tab=repositories">`repos`</a></sub>
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./assets/logbook-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="./assets/logbook-light.svg">
-  <img alt="Weekly GitHub contributions over the last 52 weeks" src="./assets/logbook-dark.svg" width="100%">
+  <source media="(prefers-color-scheme: dark)" srcset="./assets/captain-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="./assets/captain-light.svg">
+  <img alt="Captain's log: mission, on watch, off watch and home port" src="./assets/captain-dark.svg" width="100%">
+</picture>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./assets/sonar-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="./assets/sonar-light.svg">
+  <img alt="Weekly GitHub contributions over the last 52 weeks" src="./assets/sonar-dark.svg" width="100%">
 </picture>
 
 </div>
 
 ---
 
-Final-year **Digital Systems** student at the University of Piraeus and working IT support technician, moving toward **Data Engineering, Data Analysis and DevOps**. I like the systems behind the software: how infrastructure carries applications, how data moves, and what can be automated.
+IT Engineer and final-year **Digital Systems** student at the University of Piraeus, moving toward **Data Engineering, Data Analysis and DevOps**. I like the systems behind the software: how infrastructure carries applications, how data moves, and what can be automated.
 
 > **Start with the problem → understand the system → build the solution → improve it.**
 
@@ -26,14 +32,14 @@ Final-year **Digital Systems** student at the University of Piraeus and working 
 
 | Project | What it is | Stack |
 |---|---|---|
-| [DevFlow](https://github.com/nenikolaidis/devflow.github.io) · [live](http://devflow.nenikolaidis.gr/) | Web application demonstrating authentication, database integration, security rules, testing, CI/CD and deployment | JavaScript · CI/CD |
+| [DevFlow](https://github.com/nenikolaidis/devflow.github.io) | Web application demonstrating authentication, database integration, security rules, testing, CI/CD and deployment | JavaScript · CI/CD |
 | [GS1 Inventory Scanner](https://github.com/nenikolaidis/gs1-inventory-scanner) | Inventory application for GS1 barcode parsing, data storage, search and label printing | — |
 | [Python Programs](https://github.com/nenikolaidis/Python-Programs) | Programs, exercises, algorithms and networking projects | Python |
 | [This profile](./generate.py) | Python pipeline that pulls GitHub API data and renders these cards, refreshed daily by [GitHub Actions](./.github/workflows/update.yml) | Python · GraphQL · Actions |
 
 ## Experience
 
-- **IT Support Technician** · Friktories · *Oct 2024 – present*: on-site and remote support, system-upgrade advice, user training on SOPs
+- **IT Engineer** · *present*: infrastructure, systems and user support
 - **Military IT Technician** · 251 Hellenic Air Force Hospital · *Nov 2024 – Nov 2025*: kept hospital IT systems running; hardware, software and network troubleshooting; preventive maintenance
 - **Administration & Technical Staff** · Alimpinisis Tutoring School · *Sep 2021 – Apr 2023*: IT and admin support, scheduling, led a time-management training course
 
