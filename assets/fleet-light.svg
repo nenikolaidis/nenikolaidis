@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 298" width="880" height="298" role="img" aria-labelledby="title desc">
 <title id="title">Fleet: public repositories</title>
-<desc id="desc">Public repositories: devflow (Web app with authentication, database integration, security rules, testing, CI/CD and deployment); gs1-inventory-scanner (Scan GS1 pallet and carton labels on any device, track where stock goes, and print GS1-128 labels. Open source and self-hosted.); Python-Programs; Airline-App</desc>
+<desc id="desc">Public repositories: gs1-inventory-scanner (Scan GS1 pallet and carton labels on any device, track where stock goes, and print GS1-128 labels. Open source and self-hosted.); devflow (Web app with authentication, database integration, security rules, testing, CI/CD and deployment); Python-Programs; Airline-App</desc>
 <style>
 text { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace; }
 
@@ -24,16 +24,16 @@ text { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation M
 <rect x="0.5" y="0.5" width="879" height="297" rx="14" fill="url(#grid)"/>
 <g fill="#13212e">
 <rect x="24.0" y="24.0" width="832.0" height="250.0" rx="8" fill="rgba(20,60,100,0.03)" stroke="rgba(20,60,100,0.16)"/><text x="38.0" y="46.0" font-size="11" font-weight="700" fill="#0f8a84" text-anchor="start" letter-spacing="1.5">[ FLEET ]</text><text x="118.9" y="46.0" font-size="11" font-weight="400" fill="#5d7184" text-anchor="start" >latest 4 of 5 public repos · auto-discovered</text>
-<circle cx="42" cy="78" r="4" fill="#F1E05A"/>
-<text x="54.0" y="82.0" font-size="14" font-weight="700" text-anchor="start" >devflow</text>
-<rect x="125.1" y="70" width="52" height="16" rx="8" fill="none" stroke="#15803d"/><circle class="blip" cx="136.1" cy="78" r="3" fill="#15803d"/><text x="144.1" y="82.0" font-size="10" font-weight="700" fill="#15803d" text-anchor="start" letter-spacing="1">LIVE</text>
-<text x="842.0" y="82.0" font-size="11" font-weight="400" fill="#5d7184" text-anchor="end" >JavaScript · today</text>
-<text x="54.0" y="100.0" font-size="12" font-weight="400" fill="#5d7184" text-anchor="start" >Web app with authentication, database integration, security rules, testing, CI/CD and deployment</text>
+<circle cx="42" cy="78" r="4" fill="#3776AB"/>
+<text x="54.0" y="82.0" font-size="14" font-weight="700" text-anchor="start" >gs1-inventory-scanner</text>
+<text x="842.0" y="82.0" font-size="11" font-weight="400" fill="#5d7184" text-anchor="end" >Python · 1d ago</text>
+<text x="54.0" y="100.0" font-size="12" font-weight="400" fill="#5d7184" text-anchor="start" >Scan GS1 pallet and carton labels on any device, track where stock goes, and print GS1-128 labels. Open…</text>
 <line x1="38" y1="108" x2="842" y2="108" stroke="rgba(20,60,100,0.16)" stroke-dasharray="2 4"/>
-<circle cx="42" cy="124" r="4" fill="#3776AB"/>
-<text x="54.0" y="128.0" font-size="14" font-weight="700" text-anchor="start" >gs1-inventory-scanner</text>
-<text x="842.0" y="128.0" font-size="11" font-weight="400" fill="#5d7184" text-anchor="end" >Python · today</text>
-<text x="54.0" y="146.0" font-size="12" font-weight="400" fill="#5d7184" text-anchor="start" >Scan GS1 pallet and carton labels on any device, track where stock goes, and print GS1-128 labels. Open…</text>
+<circle cx="42" cy="124" r="4" fill="#F1E05A"/>
+<text x="54.0" y="128.0" font-size="14" font-weight="700" text-anchor="start" >devflow</text>
+<rect x="125.1" y="116" width="52" height="16" rx="8" fill="none" stroke="#15803d"/><circle class="blip" cx="136.1" cy="124" r="3" fill="#15803d"/><text x="144.1" y="128.0" font-size="10" font-weight="700" fill="#15803d" text-anchor="start" letter-spacing="1">LIVE</text>
+<text x="842.0" y="128.0" font-size="11" font-weight="400" fill="#5d7184" text-anchor="end" >JavaScript · 1d ago</text>
+<text x="54.0" y="146.0" font-size="12" font-weight="400" fill="#5d7184" text-anchor="start" >Web app with authentication, database integration, security rules, testing, CI/CD and deployment</text>
 <line x1="38" y1="154" x2="842" y2="154" stroke="rgba(20,60,100,0.16)" stroke-dasharray="2 4"/>
 <circle cx="42" cy="170" r="4" fill="#3776AB"/>
 <text x="54.0" y="174.0" font-size="14" font-weight="700" text-anchor="start" >Python-Programs</text>
