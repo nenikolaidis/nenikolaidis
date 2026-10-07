@@ -366,19 +366,36 @@
   "2026-10-03": 0,
   "2026-10-04": 32,
   "2026-10-05": 18,
-  "2026-10-06": 0
+  "2026-10-06": 9,
+  "2026-10-07": 0
  },
  "langs": {
-  "CSS": 85059,
+  "CSS": 92315,
   "Dockerfile": 1434,
-  "HTML": 17948,
+  "HTML": 18430,
   "JavaScript": 407922,
   "Mako": 704,
   "PHP": 124848,
-  "Python": 272238,
-  "TypeScript": 113005
+  "Python": 293213,
+  "TypeScript": 147655
  },
  "repos": [
+  {
+   "description": "Flight booking REST API with Flask, MongoDB and Docker. University of Piraeus project, rebuilt with tests and CI.",
+   "homepage": "https://digital-airlines-web.onrender.com/",
+   "language": "Python",
+   "name": "digital-airlines-api",
+   "pushed_at": "2026-10-06T17:21:43Z",
+   "stars": 0
+  },
+  {
+   "description": "Scan GS1 pallet and carton labels on any device, track where stock goes, and print GS1-128 labels. Open source and self-hosted.",
+   "homepage": null,
+   "language": "Python",
+   "name": "gs1-inventory-scanner",
+   "pushed_at": "2026-10-06T17:06:51Z",
+   "stars": 0
+  },
   {
    "description": "Web app with authentication, database integration, security rules, testing, CI/CD and deployment",
    "homepage": "https://devflow-board-11146.web.app/demo/",
@@ -388,27 +405,11 @@
    "stars": 0
   },
   {
-   "description": "Flight booking REST API with Flask, MongoDB and Docker. University of Piraeus project, rebuilt with tests and CI.",
-   "homepage": "https://digital-airlines-api.onrender.com/",
-   "language": "Python",
-   "name": "digital-airlines-api",
-   "pushed_at": "2026-10-05T19:21:54Z",
-   "stars": 0
-  },
-  {
    "description": "Small Python programs I wrote while learning: networking, cryptography challenges, competitive programming and algorithm exercises.",
    "homepage": null,
    "language": "Python",
    "name": "python-playground",
    "pushed_at": "2026-10-05T18:04:51Z",
-   "stars": 0
-  },
-  {
-   "description": "Scan GS1 pallet and carton labels on any device, track where stock goes, and print GS1-128 labels. Open source and self-hosted.",
-   "homepage": null,
-   "language": "Python",
-   "name": "gs1-inventory-scanner",
-   "pushed_at": "2026-10-05T17:27:23Z",
    "stars": 0
   },
   {

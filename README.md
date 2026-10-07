@@ -27,7 +27,7 @@
 </a>
 
 <!-- live:start -->
-<sub>`▶ live` <a href="https://devflow-board-11146.web.app/demo/">devflow</a> · <a href="https://digital-airlines-api.onrender.com/">digital-airlines-api</a></sub>
+<sub>`▶ live` <a href="https://digital-airlines-web.onrender.com/">digital-airlines-api</a> · <a href="https://devflow-board-11146.web.app/demo/">devflow</a></sub>
 <!-- live:end -->
 
 <picture>
