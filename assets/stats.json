@@ -366,7 +366,8 @@
   "2026-10-17": 0,
   "2026-10-18": 0,
   "2026-10-19": 0,
-  "2026-10-20": 0
+  "2026-10-20": 0,
+  "2026-10-21": 0
  },
  "langs": {
   "CSS": 92315,
@@ -380,19 +381,19 @@
  },
  "repos": [
   {
+   "description": "Scan GS1 pallet and carton labels on any device, track where stock goes, and print GS1-128 labels. Open source and self-hosted.",
+   "homepage": null,
+   "language": "Python",
+   "name": "gs1-inventory-scanner",
+   "pushed_at": "2026-10-21T05:46:41Z",
+   "stars": 0
+  },
+  {
    "description": "Flight booking REST API with Flask, MongoDB and Docker. University of Piraeus project, rebuilt with tests and CI.",
    "homepage": "https://digital-airlines-web.onrender.com/",
    "language": "Python",
    "name": "digital-airlines-api",
    "pushed_at": "2026-10-06T17:21:43Z",
-   "stars": 0
-  },
-  {
-   "description": "Scan GS1 pallet and carton labels on any device, track where stock goes, and print GS1-128 labels. Open source and self-hosted.",
-   "homepage": null,
-   "language": "Python",
-   "name": "gs1-inventory-scanner",
-   "pushed_at": "2026-10-06T17:06:51Z",
    "stars": 0
   },
   {
