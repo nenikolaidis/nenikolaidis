@@ -29,20 +29,20 @@ text { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation M
 <line x1="38" y1="105.0" x2="842" y2="105.0" stroke="rgba(120,170,210,0.16)" stroke-dasharray="2 4"/>
 <line x1="38" y1="64.0" x2="842" y2="64.0" stroke="rgba(120,170,210,0.16)" stroke-dasharray="2 4"/>
 <defs><linearGradient id="depth" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3fd0c9" stop-opacity="0.35"/><stop offset="1" stop-color="#3fd0c9" stop-opacity="0"/></linearGradient></defs>
-<polygon points="38,146 38.0,146.0 53.5,146.0 68.9,146.0 84.4,146.0 99.8,146.0 115.3,146.0 130.8,146.0 146.2,146.0 161.7,137.8 177.2,146.0 192.6,146.0 208.1,146.0 223.5,146.0 239.0,146.0 254.5,146.0 269.9,146.0 285.4,146.0 300.8,146.0 316.3,146.0 331.8,146.0 347.2,146.0 362.7,146.0 378.2,146.0 393.6,146.0 409.1,146.0 424.5,146.0 440.0,146.0 455.5,146.0 470.9,146.0 486.4,146.0 501.8,146.0 517.3,146.0 532.8,146.0 548.2,146.0 563.7,146.0 579.2,146.0 594.6,146.0 610.1,146.0 625.5,146.0 641.0,64.0 656.5,146.0 671.9,146.0 687.4,146.0 702.8,146.0 718.3,146.0 733.8,146.0 749.2,146.0 764.7,146.0 780.2,146.0 795.6,146.0 811.1,65.4 826.5,146.0 842.0,146.0 842,146" fill="url(#depth)"/>
-<polyline points="38.0,146.0 53.5,146.0 68.9,146.0 84.4,146.0 99.8,146.0 115.3,146.0 130.8,146.0 146.2,146.0 161.7,137.8 177.2,146.0 192.6,146.0 208.1,146.0 223.5,146.0 239.0,146.0 254.5,146.0 269.9,146.0 285.4,146.0 300.8,146.0 316.3,146.0 331.8,146.0 347.2,146.0 362.7,146.0 378.2,146.0 393.6,146.0 409.1,146.0 424.5,146.0 440.0,146.0 455.5,146.0 470.9,146.0 486.4,146.0 501.8,146.0 517.3,146.0 532.8,146.0 548.2,146.0 563.7,146.0 579.2,146.0 594.6,146.0 610.1,146.0 625.5,146.0 641.0,64.0 656.5,146.0 671.9,146.0 687.4,146.0 702.8,146.0 718.3,146.0 733.8,146.0 749.2,146.0 764.7,146.0 780.2,146.0 795.6,146.0 811.1,65.4 826.5,146.0 842.0,146.0" fill="none" stroke="#3fd0c9" stroke-width="1.8" stroke-linejoin="round"/>
+<polygon points="38,146 38.0,146.0 53.5,146.0 68.9,146.0 84.4,146.0 99.8,146.0 115.3,146.0 130.8,146.0 146.2,137.8 161.7,146.0 177.2,146.0 192.6,146.0 208.1,146.0 223.5,146.0 239.0,146.0 254.5,146.0 269.9,146.0 285.4,146.0 300.8,146.0 316.3,146.0 331.8,146.0 347.2,146.0 362.7,146.0 378.2,146.0 393.6,146.0 409.1,146.0 424.5,146.0 440.0,146.0 455.5,146.0 470.9,146.0 486.4,146.0 501.8,146.0 517.3,146.0 532.8,146.0 548.2,146.0 563.7,146.0 579.2,146.0 594.6,146.0 610.1,146.0 625.5,64.0 641.0,146.0 656.5,146.0 671.9,146.0 687.4,146.0 702.8,146.0 718.3,146.0 733.8,146.0 749.2,146.0 764.7,146.0 780.2,146.0 795.6,65.4 811.1,146.0 826.5,146.0 842.0,146.0 842,146" fill="url(#depth)"/>
+<polyline points="38.0,146.0 53.5,146.0 68.9,146.0 84.4,146.0 99.8,146.0 115.3,146.0 130.8,146.0 146.2,137.8 161.7,146.0 177.2,146.0 192.6,146.0 208.1,146.0 223.5,146.0 239.0,146.0 254.5,146.0 269.9,146.0 285.4,146.0 300.8,146.0 316.3,146.0 331.8,146.0 347.2,146.0 362.7,146.0 378.2,146.0 393.6,146.0 409.1,146.0 424.5,146.0 440.0,146.0 455.5,146.0 470.9,146.0 486.4,146.0 501.8,146.0 517.3,146.0 532.8,146.0 548.2,146.0 563.7,146.0 579.2,146.0 594.6,146.0 610.1,146.0 625.5,64.0 641.0,146.0 656.5,146.0 671.9,146.0 687.4,146.0 702.8,146.0 718.3,146.0 733.8,146.0 749.2,146.0 764.7,146.0 780.2,146.0 795.6,65.4 811.1,146.0 826.5,146.0 842.0,146.0" fill="none" stroke="#3fd0c9" stroke-width="1.8" stroke-linejoin="round"/>
 <circle cx="842.0" cy="146.0" r="3.5" fill="#ffb547" class="blip"/>
-<text x="68.9" y="162.0" font-size="10" font-weight="400" fill="#6f8599" text-anchor="middle" >nov</text>
-<text x="146.2" y="162.0" font-size="10" font-weight="400" fill="#6f8599" text-anchor="middle" >dec</text>
-<text x="208.1" y="162.0" font-size="10" font-weight="400" fill="#6f8599" text-anchor="middle" >jan</text>
-<text x="269.9" y="162.0" font-size="10" font-weight="400" fill="#6f8599" text-anchor="middle" >feb</text>
-<text x="331.8" y="162.0" font-size="10" font-weight="400" fill="#6f8599" text-anchor="middle" >mar</text>
-<text x="409.1" y="162.0" font-size="10" font-weight="400" fill="#6f8599" text-anchor="middle" >apr</text>
-<text x="470.9" y="162.0" font-size="10" font-weight="400" fill="#6f8599" text-anchor="middle" >may</text>
-<text x="548.2" y="162.0" font-size="10" font-weight="400" fill="#6f8599" text-anchor="middle" >jun</text>
-<text x="610.1" y="162.0" font-size="10" font-weight="400" fill="#6f8599" text-anchor="middle" >jul</text>
-<text x="671.9" y="162.0" font-size="10" font-weight="400" fill="#6f8599" text-anchor="middle" >aug</text>
-<text x="749.2" y="162.0" font-size="10" font-weight="400" fill="#6f8599" text-anchor="middle" >sep</text>
-<text x="811.1" y="162.0" font-size="10" font-weight="400" fill="#6f8599" text-anchor="middle" >oct</text>
+<text x="53.5" y="162.0" font-size="10" font-weight="400" fill="#6f8599" text-anchor="middle" >nov</text>
+<text x="130.8" y="162.0" font-size="10" font-weight="400" fill="#6f8599" text-anchor="middle" >dec</text>
+<text x="192.6" y="162.0" font-size="10" font-weight="400" fill="#6f8599" text-anchor="middle" >jan</text>
+<text x="254.5" y="162.0" font-size="10" font-weight="400" fill="#6f8599" text-anchor="middle" >feb</text>
+<text x="316.3" y="162.0" font-size="10" font-weight="400" fill="#6f8599" text-anchor="middle" >mar</text>
+<text x="393.6" y="162.0" font-size="10" font-weight="400" fill="#6f8599" text-anchor="middle" >apr</text>
+<text x="455.5" y="162.0" font-size="10" font-weight="400" fill="#6f8599" text-anchor="middle" >may</text>
+<text x="532.8" y="162.0" font-size="10" font-weight="400" fill="#6f8599" text-anchor="middle" >jun</text>
+<text x="594.6" y="162.0" font-size="10" font-weight="400" fill="#6f8599" text-anchor="middle" >jul</text>
+<text x="656.5" y="162.0" font-size="10" font-weight="400" fill="#6f8599" text-anchor="middle" >aug</text>
+<text x="733.8" y="162.0" font-size="10" font-weight="400" fill="#6f8599" text-anchor="middle" >sep</text>
+<text x="795.6" y="162.0" font-size="10" font-weight="400" fill="#6f8599" text-anchor="middle" >oct</text>
 </g>
 </svg>
