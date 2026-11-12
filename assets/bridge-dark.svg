@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 608" width="880" height="608" role="img" aria-labelledby="title desc">
 <title id="title">NEARCHOS NIKOLAIDIS profile card</title>
-<desc id="desc">IT Engineer · Data Engineering · DevOps. charting better ways to build. Based in Greece. 132 contributions in the last year across 6 public repositories.</desc>
+<desc id="desc">IT Engineer · Data Engineering · DevOps. charting better ways to build. Based in Greece. 147 contributions in the last year across 6 public repositories.</desc>
 <style>
 text { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace; }
 
@@ -29,11 +29,11 @@ text { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation M
 <circle cx="100" cy="104" r="21.8" fill="none" stroke="rgba(120,170,210,0.16)"/>
 <path d="M 34 104 H 166 M 100 38 V 170" stroke="rgba(120,170,210,0.16)"/>
 <g class="sweep"><path d="M 100 104 L 166 104 A 66 66 0 0 0 137.9 49.9 Z" fill="url(#sweepfill)"/><line x1="100" y1="104" x2="166" y2="104" stroke="#3fd0c9" stroke-width="1.5"/></g>
-<circle class="blip" style="animation-delay:0.0s" cx="88.3" cy="107.3" r="3" fill="#3fd0c9"/>
-<circle class="blip" style="animation-delay:0.7s" cx="90.3" cy="112.7" r="3" fill="#3fd0c9"/>
-<circle class="blip" style="animation-delay:1.4s" cx="94.5" cy="90.5" r="3" fill="#3fd0c9"/>
-<circle class="blip" style="animation-delay:2.1s" cx="106.7" cy="119.1" r="3" fill="#3fd0c9"/>
-<circle class="blip" style="animation-delay:2.8s" cx="93.2" cy="119.3" r="3" fill="#3fd0c9"/>
+<circle class="blip" style="animation-delay:0.0s" cx="91.2" cy="111.9" r="3" fill="#3fd0c9"/>
+<circle class="blip" style="animation-delay:0.7s" cx="88.5" cy="107.3" r="3" fill="#3fd0c9"/>
+<circle class="blip" style="animation-delay:1.4s" cx="94.5" cy="90.3" r="3" fill="#3fd0c9"/>
+<circle class="blip" style="animation-delay:2.1s" cx="106.8" cy="119.3" r="3" fill="#3fd0c9"/>
+<circle class="blip" style="animation-delay:2.8s" cx="93.2" cy="119.4" r="3" fill="#3fd0c9"/>
 <circle class="blip" style="animation-delay:3.5s" cx="155.5" cy="82.7" r="3" fill="#3fd0c9"/>
 <circle cx="100" cy="104" r="2.5" fill="#ffb547"/>
 <text x="200.0" y="46.0" font-size="11" font-weight="400" fill="#6f8599" text-anchor="start" letter-spacing="1.5">[ NAV-01 ] bridge console</text>
@@ -53,52 +53,52 @@ text { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation M
 <text x="38.0" y="376.0" font-size="13" font-weight="400" fill="#ffb547" text-anchor="start" >▸ </text><text x="56.0" y="376.0" font-size="13" font-weight="400" text-anchor="start" >devops · automation</text>
 <text x="38.0" y="398.0" font-size="13" font-weight="400" fill="#ffb547" text-anchor="start" >▸ </text><text x="56.0" y="398.0" font-size="13" font-weight="400" text-anchor="start" >cloud · azure</text>
 <rect x="306.7" y="282.0" width="266.7" height="132.0" rx="8" fill="rgba(120,170,210,0.04)" stroke="rgba(120,170,210,0.16)"/><text x="320.7" y="304.0" font-size="11" font-weight="700" fill="#3fd0c9" text-anchor="start" letter-spacing="1.5">[ TELEMETRY ]</text>
-<text x="320.7" y="336.0" font-size="12" font-weight="400" fill="#6f8599" text-anchor="start" >contrib · 12mo</text><text x="559.3" y="338.0" font-size="22" font-weight="700" text-anchor="end" >132</text>
-<text x="320.7" y="366.0" font-size="12" font-weight="400" fill="#6f8599" text-anchor="start" >contrib · 30d</text><text x="559.3" y="368.0" font-size="22" font-weight="700" text-anchor="end" >7</text>
+<text x="320.7" y="336.0" font-size="12" font-weight="400" fill="#6f8599" text-anchor="start" >contrib · 12mo</text><text x="559.3" y="338.0" font-size="22" font-weight="700" text-anchor="end" >147</text>
+<text x="320.7" y="366.0" font-size="12" font-weight="400" fill="#6f8599" text-anchor="start" >contrib · 30d</text><text x="559.3" y="368.0" font-size="22" font-weight="700" text-anchor="end" >22</text>
 <text x="320.7" y="396.0" font-size="12" font-weight="400" fill="#6f8599" text-anchor="start" >public repos</text><text x="559.3" y="398.0" font-size="22" font-weight="700" text-anchor="end" >6</text>
 <rect x="589.3" y="282.0" width="266.7" height="132.0" rx="8" fill="rgba(120,170,210,0.04)" stroke="rgba(120,170,210,0.16)"/><text x="603.3" y="304.0" font-size="11" font-weight="700" fill="#3fd0c9" text-anchor="start" letter-spacing="1.5">[ ON DUTY ]</text>
 <text x="603.3" y="328.0" font-size="13" font-weight="400" text-anchor="start" >it engineer</text><text x="603.3" y="342.0" font-size="11" font-weight="400" fill="#6f8599" text-anchor="start" >@ infrastructure · support</text>
 <text x="603.3" y="359.0" font-size="13" font-weight="400" text-anchor="start" >always learning</text><text x="603.3" y="373.0" font-size="11" font-weight="400" fill="#6f8599" text-anchor="start" >@ studying · building new things</text>
 <text x="603.3" y="390.0" font-size="13" font-weight="400" text-anchor="start" >building</text><text x="603.3" y="404.0" font-size="11" font-weight="400" fill="#6f8599" text-anchor="start" >@ uncharted waters</text>
 <rect class="cursor" x="725.1" y="395" width="7" height="11" fill="#ffb547"/>
-<rect x="24.0" y="430.0" width="832.0" height="130.0" rx="8" fill="rgba(120,170,210,0.04)" stroke="rgba(120,170,210,0.16)"/><text x="38.0" y="452.0" font-size="11" font-weight="700" fill="#3fd0c9" text-anchor="start" letter-spacing="1.5">[ MANIFEST ]</text><text x="143.2" y="452.0" font-size="11" font-weight="400" fill="#6f8599" text-anchor="start" >8 languages · 1,185 KB across public repos</text>
-<rect x="38.0" y="466" width="347.9" height="10" rx="2" fill="#F1E05A"/>
-<rect x="387.9" y="466" width="192.2" height="10" rx="2" fill="#3776AB"/>
-<rect x="582.1" y="466" width="95.8" height="10" rx="2" fill="#3178C6"/>
-<rect x="679.9" y="466" width="80.7" height="10" rx="2" fill="#4F5D95"/>
-<rect x="762.6" y="466" width="61.4" height="10" rx="2" fill="#663399"/>
-<rect x="826.0" y="466" width="12.6" height="10" rx="2" fill="#E34C26"/>
+<rect x="24.0" y="430.0" width="832.0" height="130.0" rx="8" fill="rgba(120,170,210,0.04)" stroke="rgba(120,170,210,0.16)"/><text x="38.0" y="452.0" font-size="11" font-weight="700" fill="#3fd0c9" text-anchor="start" letter-spacing="1.5">[ MANIFEST ]</text><text x="143.2" y="452.0" font-size="11" font-weight="400" fill="#6f8599" text-anchor="start" >8 languages · 1,234 KB across public repos</text>
+<rect x="38.0" y="466" width="341.7" height="10" rx="2" fill="#F1E05A"/>
+<rect x="381.7" y="466" width="184.6" height="10" rx="2" fill="#3776AB"/>
+<rect x="568.3" y="466" width="113.2" height="10" rx="2" fill="#3178C6"/>
+<rect x="683.5" y="466" width="77.5" height="10" rx="2" fill="#4F5D95"/>
+<rect x="762.9" y="466" width="61.3" height="10" rx="2" fill="#663399"/>
+<rect x="826.2" y="466" width="12.4" height="10" rx="2" fill="#E34C26"/>
 <circle cx="42.0" cy="500" r="4" fill="#F1E05A"/>
 <text x="52.0" y="504.0" font-size="12" font-weight="400" text-anchor="start" >JavaScript</text>
-<text x="282.0" y="504.0" font-size="12" font-weight="700" fill="#3fd0c9" text-anchor="end" >43.5%</text>
+<text x="282.0" y="504.0" font-size="12" font-weight="700" fill="#3fd0c9" text-anchor="end" >42.7%</text>
 <rect x="52.0" y="511" width="230.0" height="3" rx="1.5" fill="rgba(120,170,210,0.10)"/>
 <rect x="52.0" y="511" width="230.0" height="3" rx="1.5" fill="#F1E05A"/>
 <circle cx="310.0" cy="500" r="4" fill="#3776AB"/>
 <text x="320.0" y="504.0" font-size="12" font-weight="400" text-anchor="start" >Python</text>
-<text x="550.0" y="504.0" font-size="12" font-weight="700" fill="#3fd0c9" text-anchor="end" >24.2%</text>
+<text x="550.0" y="504.0" font-size="12" font-weight="700" fill="#3fd0c9" text-anchor="end" >23.2%</text>
 <rect x="320.0" y="511" width="230.0" height="3" rx="1.5" fill="rgba(120,170,210,0.10)"/>
-<rect x="320.0" y="511" width="127.7" height="3" rx="1.5" fill="#3776AB"/>
+<rect x="320.0" y="511" width="124.9" height="3" rx="1.5" fill="#3776AB"/>
 <circle cx="578.0" cy="500" r="4" fill="#3178C6"/>
 <text x="588.0" y="504.0" font-size="12" font-weight="400" text-anchor="start" >TypeScript</text>
-<text x="818.0" y="504.0" font-size="12" font-weight="700" fill="#3fd0c9" text-anchor="end" >12.2%</text>
+<text x="818.0" y="504.0" font-size="12" font-weight="700" fill="#3fd0c9" text-anchor="end" >14.3%</text>
 <rect x="588.0" y="511" width="230.0" height="3" rx="1.5" fill="rgba(120,170,210,0.10)"/>
-<rect x="588.0" y="511" width="64.3" height="3" rx="1.5" fill="#3178C6"/>
+<rect x="588.0" y="511" width="77.1" height="3" rx="1.5" fill="#3178C6"/>
 <circle cx="42.0" cy="530" r="4" fill="#4F5D95"/>
 <text x="52.0" y="534.0" font-size="12" font-weight="400" text-anchor="start" >PHP</text>
-<text x="282.0" y="534.0" font-size="12" font-weight="700" fill="#3fd0c9" text-anchor="end" >10.3%</text>
+<text x="282.0" y="534.0" font-size="12" font-weight="700" fill="#3fd0c9" text-anchor="end" >9.9%</text>
 <rect x="52.0" y="541" width="230.0" height="3" rx="1.5" fill="rgba(120,170,210,0.10)"/>
-<rect x="52.0" y="541" width="54.4" height="3" rx="1.5" fill="#4F5D95"/>
+<rect x="52.0" y="541" width="53.2" height="3" rx="1.5" fill="#4F5D95"/>
 <circle cx="310.0" cy="530" r="4" fill="#663399"/>
 <text x="320.0" y="534.0" font-size="12" font-weight="400" text-anchor="start" >CSS</text>
 <text x="550.0" y="534.0" font-size="12" font-weight="700" fill="#3fd0c9" text-anchor="end" >7.9%</text>
 <rect x="320.0" y="541" width="230.0" height="3" rx="1.5" fill="rgba(120,170,210,0.10)"/>
-<rect x="320.0" y="541" width="41.7" height="3" rx="1.5" fill="#663399"/>
+<rect x="320.0" y="541" width="42.4" height="3" rx="1.5" fill="#663399"/>
 <circle cx="578.0" cy="530" r="4" fill="#E34C26"/>
 <text x="588.0" y="534.0" font-size="12" font-weight="400" text-anchor="start" >HTML</text>
 <text x="818.0" y="534.0" font-size="12" font-weight="700" fill="#3fd0c9" text-anchor="end" >1.8%</text>
 <rect x="588.0" y="541" width="230.0" height="3" rx="1.5" fill="rgba(120,170,210,0.10)"/>
 <rect x="588.0" y="541" width="9.6" height="3" rx="1.5" fill="#E34C26"/>
-<text x="24.0" y="588.0" font-size="11" font-weight="400" fill="#6f8599" text-anchor="start" >&gt; last_sync 2026-11-11</text>
+<text x="24.0" y="588.0" font-size="11" font-weight="400" fill="#6f8599" text-anchor="start" >&gt; last_sync 2026-11-12</text>
 <text x="856.0" y="588.0" font-size="11" font-weight="400" fill="#6f8599" text-anchor="end" >github.com/nenikolaidis</text>
 </g>
 </svg>
